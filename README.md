@@ -1,22 +1,25 @@
 # Hands of Hope
 
-### A technology-driven platform for accessible, transparent, and accountable community assistance.
+### Connecting people, resources, and communities through accountable technology.
 
-Hands of Hope is a social-impact platform designed to improve how people access assistance and how resources are coordinated, reviewed, and distributed within communities. It aims to connect people in need with available resources through a structured process that promotes transparency, accountability, and more effective distribution.
+Hands of Hope is a social-impact platform designed to improve how people access assistance and how resources are coordinated, reviewed, and distributed within communities.
+
+By bringing resource discovery, assistance requests, review processes, and distribution records into a structured digital workflow, the platform aims to make community support more accessible, organized, transparent, and accountable.
 
 **Team:** Transformative Creatives  
-**Project Type:** Social Impact / Full-Stack Web Application  
-**Development Status:** In Development
+**Project type:** Social Impact / Full-Stack Web Application  
+**Development status:** In Development
 
 ---
 
 ## Table of Contents
 
-- [Problem Statement](#problem-statement)
-- [Proposed Solution](#proposed-solution)
-- [Objectives](#objectives)
+- [Overview](#overview)
+- [The Problem](#the-problem)
+- [Our Solution](#our-solution)
+- [Project Objectives](#project-objectives)
 - [Core Features](#core-features)
-- [Development Phases](#development-phases)
+- [Development Roadmap](#development-roadmap)
 - [System Architecture](#system-architecture)
 - [Technology Stack](#technology-stack)
 - [Security and Accountability](#security-and-accountability)
@@ -29,30 +32,60 @@ Hands of Hope is a social-impact platform designed to improve how people access 
 
 ---
 
-## Problem Statement
+## Overview
 
-Accessing essential assistance is not always straightforward. Individuals and communities may struggle to identify available resources, understand how to request support, or determine the status of their requests. At the same time, organizations and resource providers need reliable ways to review requests, coordinate distribution, and maintain accurate records.
+Accessing essential assistance can be difficult when information is scattered across different channels, requests are handled manually, and the outcomes of resource distribution are difficult to track.
 
-When these processes rely on fragmented communication or manual record-keeping, they can become difficult to manage and monitor. Limited visibility into request statuses and distribution outcomes can also make accountability more challenging.
+Hands of Hope is being developed to provide a centralized platform for managing the assistance journey, from discovering available resources to recording distribution outcomes.
 
-Hands of Hope addresses these challenges by proposing a centralized digital platform for coordinating assistance, managing requests, and recording distribution activities.
+The project focuses on three core principles:
 
-## Proposed Solution
+- **Accessibility:** Make available resources easier to discover.
+- **Transparency:** Provide clearer request statuses and structured review processes.
+- **Accountability:** Maintain traceable records of decisions, collections, and distributions.
 
-Hands of Hope provides a structured workflow through which users can discover available resources, submit requests for assistance, and track the progress of those requests.
+The objective is to support a more coordinated process between people seeking assistance, resource providers, and authorized administrators.
 
-The platform is designed to support resource providers and administrators in reviewing requests, managing available inventory, coordinating collections, and maintaining distribution records.
+## The Problem
 
-By bringing these activities into one system, Hands of Hope aims to make community assistance more accessible, organized, and accountable.
+Community assistance often involves several stakeholders, including individuals seeking support, resource providers, volunteers, and administrators.
 
-## Objectives
+Without a shared and structured process, these stakeholders may encounter difficulties such as:
 
-- **Improve accessibility:** Make available resources easier to discover.
-- **Structure assistance requests:** Provide a consistent process for submitting and reviewing requests.
-- **Strengthen accountability:** Maintain traceable records of approvals, collections, and distributions.
-- **Improve coordination:** Help resource providers and administrators manage inventory and distribution activities.
-- **Increase transparency:** Make request progress and relevant status changes easier to understand.
-- **Support informed decisions:** Introduce rule-based assistance recommendations as the platform evolves.
+- Limited visibility into available resources.
+- Unclear procedures for requesting assistance.
+- Difficulty tracking the progress of submitted requests.
+- Challenges coordinating resources with approved needs.
+- Inconsistent inventory and distribution records.
+- Limited visibility into whether approved assistance was actually distributed.
+
+When these processes depend on fragmented communication and manual record-keeping, coordination becomes more difficult and accountability can suffer.
+
+Hands of Hope addresses these challenges through a centralized digital workflow for discovering resources, managing requests, coordinating distribution, and maintaining relevant records.
+
+## Our Solution
+
+Hands of Hope aims to connect people, resources, and community support through a structured assistance workflow.
+
+The proposed process follows five stages:
+
+1. **Discover:** Explore available resources and assistance opportunities.
+2. **Request:** Submit a structured request explaining the assistance needed.
+3. **Review:** Allow authorized personnel to assess requests and record decisions.
+4. **Collect:** Coordinate the collection of approved assistance.
+5. **Record:** Document distribution outcomes to support accountability.
+
+Each stage has a distinct purpose. Submitting a request does not automatically mean it has been approved, and approval alone does not confirm that assistance has been received.
+
+## Project Objectives
+
+- Improve access to information about available resources.
+- Establish a consistent process for submitting and reviewing assistance requests.
+- Improve coordination between recipients, resource providers, and administrators.
+- Maintain reliable inventory and distribution records.
+- Make request progress and relevant decisions easier to understand.
+- Introduce transparent, rule-based recommendations for matching needs with available resources.
+- Establish appropriate security and authorization controls for sensitive operations.
 
 ---
 
@@ -60,280 +93,319 @@ By bringing these activities into one system, Hands of Hope aims to make communi
 
 ### 1. Resource Discovery
 
-- Browse available resources and assistance categories.
+A centralized interface for exploring available resources and assistance categories.
+
+Planned capabilities include:
+
+- Browse available resources.
 - View relevant resource information.
-- Explore resources that may address specific needs.
-- Support the discovery of available assistance through a centralized interface.
+- Explore assistance categories.
+- Identify resources that may align with specific needs.
 
 ### 2. Assistance Request Management
 
-- Submit requests for assistance.
-- Capture the information required for request review.
-- Track request status through the review process.
-- Distinguish between submitted, under-review, approved, and other applicable statuses.
+A structured process for communicating assistance needs and tracking requests.
+
+Planned capabilities include:
+
+- Submit assistance requests.
+- Capture information required for review.
+- View request statuses.
+- Track relevant changes throughout the request lifecycle.
 
 ### 3. Request Review and Approval
 
-- Provide administrators or authorized reviewers with a structured review process.
-- Record review outcomes and relevant status changes.
-- Separate request submission from approval.
-- Support more consistent and accountable decision-making.
+A review workflow that separates request submission from approval.
+
+Planned capabilities include:
+
+- Provide authorized reviewers with request information.
+- Record review decisions.
+- Update request statuses.
+- Maintain records of relevant approval and rejection actions.
 
 ### 4. Resource and Inventory Management
 
-- Maintain records of available resources.
-- Support inventory updates associated with distribution activities.
-- Help authorized users coordinate available resources with approved requests.
-- Preserve consistency between inventory records and distribution records.
+Tools for maintaining resource records and coordinating available assistance.
+
+Planned capabilities include:
+
+- Maintain resource information.
+- Track resource availability.
+- Coordinate resources with approved requests.
+- Keep inventory updates consistent with distribution records.
 
 ### 5. Collection and Distribution Tracking
 
-- Support the coordination of approved collections.
-- Introduce QR-based collection identification.
-- Record distribution outcomes through the appropriate confirmation process.
-- Maintain traceability between approved requests and collection or distribution records.
+A workflow for coordinating approved assistance and recording its outcome.
 
-A QR scan alone is not treated as proof that assistance has been received. Confirmation must follow the defined collection and distribution workflow.
+Planned capabilities include:
+
+- Coordinate collection of approved resources.
+- Introduce QR-based collection identification.
+- Link collection records to relevant requests.
+- Record distribution outcomes.
+- Prevent unauthorized or repeated use of collection identifiers where applicable.
+
+**Accountability principle:** A QR scan alone is not proof that assistance has been received. Confirmation must follow an appropriate verification process and reflect the actual distribution outcome.
 
 ### 6. Role-Based Access Control
 
 The platform is designed around distinct user roles and permissions.
 
-| Role | Responsibility |
+| Role | Responsibilities |
 |---|---|
-| Customer / Recipient | Discover resources, submit requests, and view relevant request statuses |
-| Vendor / Resource Provider | Manage assigned resources and participate in approved distribution workflows |
-| Administrator | Review requests, manage authorized operations, and oversee accountability records |
+| Recipient | Discover resources, submit requests, and view relevant request statuses |
+| Resource provider | Manage assigned resources and participate in authorized assistance workflows |
+| Administrator / Reviewer | Review requests, oversee authorized operations, and maintain accountability records |
 
-Access to sensitive actions and information will be restricted according to role and authorization rules.
+Sensitive information and privileged actions should be protected through server-side authorization and database access policies, rather than relying solely on interface restrictions.
 
 ### 7. Rule-Based Assistance Recommendations
 
-An initial recommendation system is planned to help connect requests with relevant available resources using defined criteria.
+An initial recommendation feature is planned to help connect assistance requests with relevant available resources.
 
-The initial implementation will prioritize transparent, rule-based logic rather than depending on an unvalidated AI model.
+The first implementation will prioritize transparent, rule-based criteria that can be understood, tested, and refined before considering more advanced recommendation methods.
 
 ---
 
-## Development Phases
+## Development Roadmap
 
-Hands of Hope will be developed incrementally, with each phase establishing the foundation for subsequent functionality.
+Development is organized into phases to establish a reliable foundation before introducing more complex functionality.
 
 ### Phase 1 — Requirements and Project Foundation
 
-- Define the problem, target users, and core use cases.
-- Establish functional and non-functional requirements.
-- Design the system architecture and database schema.
-- Define user roles, permissions, and core workflows.
-- Set up the development environment and repository.
+**Focus:** Establish the technical and functional foundation.
 
-**Outcome:** A documented and agreed-upon technical foundation.
+- Define the problem, target users, and use cases.
+- Document functional and non-functional requirements.
+- Define the core assistance workflow.
+- Establish the application architecture.
+- Plan the database schema and user roles.
+- Configure the development environment and repository.
 
-### Phase 2 — UI/UX Design and Frontend Foundation
+**Expected outcome:** A documented project foundation and agreed-upon technical direction.
 
-- Establish the visual identity and reusable design system.
+### Phase 2 — UI/UX Design and Frontend Development
+
+**Focus:** Build the user interface and establish a consistent design system.
+
+- Define the visual identity and design tokens.
 - Develop the responsive landing page.
-- Implement reusable UI components and application layouts.
-- Create the initial navigation and user-facing interfaces.
-- Establish light and dark theme support.
+- Build reusable interface components.
+- Implement navigation and application layouts.
+- Create the initial workflow presentation.
+- Validate responsive behavior and accessibility.
 
-**Outcome:** A consistent, responsive interface for the platform.
+**Expected outcome:** A consistent, responsive frontend foundation.
 
 ### Phase 3 — Authentication and Database Integration
 
-- Integrate Supabase authentication.
-- Implement user profiles and role management.
-- Design and implement the core PostgreSQL tables.
-- Configure Row Level Security (RLS) policies.
-- Validate access permissions and protected routes.
+**Focus:** Establish identity, permissions, and persistent data storage.
 
-**Outcome:** A secure foundation for user-specific application functionality.
+- Integrate Supabase authentication.
+- Implement user profiles and role handling.
+- Design and create the PostgreSQL schema.
+- Configure Row Level Security (RLS) policies.
+- Protect routes and sensitive server actions.
+- Validate access permissions.
+
+**Expected outcome:** A secure foundation for user-specific functionality.
 
 ### Phase 4 — Core Assistance Workflow
 
-- Implement resource discovery.
-- Build assistance request submission and tracking.
-- Develop the request review and approval workflow.
-- Implement resource and inventory management.
-- Connect frontend interfaces to backend services.
+**Focus:** Connect the main user-facing workflows to application services.
 
-**Outcome:** An integrated assistance-management workflow.
+- Implement resource discovery.
+- Develop assistance request submission.
+- Implement request review and approval.
+- Add request status tracking.
+- Build resource and inventory management.
+- Integrate frontend interfaces with backend services.
+
+**Expected outcome:** An integrated assistance-management workflow.
 
 ### Phase 5 — Distribution and Accountability
+
+**Focus:** Make approved assistance traceable through fulfilment.
 
 - Implement collection coordination.
 - Introduce QR-based collection identification.
 - Record collection and distribution outcomes.
-- Ensure inventory and distribution updates remain consistent.
-- Test relevant authorization and transaction boundaries.
+- Maintain consistency between inventory and distribution records.
+- Validate authorization and duplicate-use protections.
+- Test relevant data-integrity requirements.
 
-**Outcome:** A traceable workflow for managing approved assistance and its distribution.
+**Expected outcome:** A traceable workflow for approved assistance and its distribution.
 
 ### Phase 6 — Recommendations, Testing, and Validation
 
-- Prototype rule-based assistance recommendations.
-- Test core workflows and authorization boundaries.
-- Validate responsive behavior and accessibility.
-- Test error handling and relevant edge cases.
-- Conduct integration testing and resolve identified defects.
+**Focus:** Improve reliability and validate core functionality.
 
-**Outcome:** A validated application ready for demonstration and further refinement.
+- Prototype rule-based resource recommendations.
+- Test core application workflows.
+- Validate authorization and database policies.
+- Test error handling and edge cases.
+- Review responsive behavior and accessibility.
+- Resolve identified defects.
+
+**Expected outcome:** A tested MVP ready for demonstration and further refinement.
 
 ### Phase 7 — Deployment and Iteration
 
+**Focus:** Prepare the application for deployment and continued improvement.
+
 - Configure production environment variables.
-- Deploy the web application.
-- Configure the production database and access policies.
-- Perform deployment verification.
-- Gather feedback and prioritize subsequent improvements.
+- Prepare the production database and access policies.
+- Deploy the application.
+- Verify deployed functionality.
+- Gather feedback from users and stakeholders.
+- Prioritize improvements based on validation results.
 
-**Outcome:** A deployed MVP with a documented path for continued development.
+**Expected outcome:** A deployed MVP and a documented path for continued development.
 
-> Development phases are planned milestones. Their completion and the availability of individual features depend on implementation and testing progress.
+> **Roadmap note:** These phases describe the planned development process. Their completion and the availability of individual features depend on actual implementation and testing progress.
 
 ---
 
 ## System Architecture
 
-Hands of Hope follows a web application architecture that separates the user interface, application logic, authentication, and persistent data.
+Hands of Hope follows a web application architecture that separates the user interface, application logic, authentication, authorization, and persistent data.
 
 ```text
-                    USERS
-                      |
-                      v
-          Next.js Web Application
-           React + TypeScript
-                      |
-                      v
-          Application / API Layer
-                      |
-             +--------+--------+
-             |                 |
-             v                 v
-       Supabase Auth      Authorization
-                           and RLS
-             |                 |
-             +--------+--------+
-                      |
-                      v
-             PostgreSQL Database
-                      |
-                      v
-       Requests, Resources, Inventory,
-        Collections and Distribution
+                         USERS
+                           |
+                           v
+                 Next.js Web Application
+                   React + TypeScript
+                           |
+                           v
+                 Application / API Layer
+                           |
+                 +---------+---------+
+                 |                   |
+                 v                   v
+           Supabase Auth       Authorization
+                               and RLS Policies
+                 |                   |
+                 +---------+---------+
+                           |
+                           v
+                    PostgreSQL
+                           |
+             +-------------+-------------+
+             |             |             |
+             v             v             v
+          Requests      Resources     Distribution
+                         Inventory      Records
 ```
 
-The architecture is intended to keep access control close to the data, separate responsibilities across application layers, and support incremental feature development.
-
----
+This represents the intended high-level architecture. The final diagram should be updated to reflect the application's actual implementation and configured services.
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| [Next.js](https://nextjs.org/) | Application framework and routing |
+| [Next.js](https://nextjs.org/) | Web application framework and routing |
 | [React](https://react.dev/) | Component-based user interface |
-| [TypeScript](https://www.typescriptlang.org/) | Static typing and maintainable application code |
-| [Tailwind CSS](https://tailwindcss.com/) | Responsive styling and design implementation |
-| [shadcn/ui](https://ui.shadcn.com/) | Reusable and customizable UI components |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety and maintainable code |
+| [Tailwind CSS](https://tailwindcss.com/) | Responsive styling |
+| [shadcn/ui](https://ui.shadcn.com/) | Customizable UI components |
 | [Motion for React](https://motion.dev/) | Interface transitions and animations |
-| [Lucide](https://lucide.dev/) | Consistent interface icons |
-| [Supabase](https://supabase.com/) | Authentication, database integration, and supporting backend services |
-| PostgreSQL | Relational data persistence |
-| [Vercel](https://vercel.com/) | Proposed hosting and deployment platform |
-| Git and GitHub | Version control and collaborative development |
+| [Lucide](https://lucide.dev/) | Interface icons |
+| [Supabase](https://supabase.com/) | Authentication and database services |
+| [PostgreSQL](https://www.postgresql.org/) | Relational data storage |
+| [Vercel](https://vercel.com/) | Intended hosting and deployment platform |
+| Git and GitHub | Version control and collaboration |
 
-The stack reflects the project's intended implementation. Deployment and integration details may evolve as development progresses.
+The table reflects the intended technology stack. It should be kept aligned with the packages and services actually used in the repository.
 
 ---
 
 ## Security and Accountability
 
-Because the platform handles assistance requests and distribution records, security and data integrity are central design considerations.
+Because Hands of Hope may handle sensitive assistance requests and distribution records, security and data integrity are central engineering considerations.
 
-The implementation is intended to incorporate:
+The implementation should address the following:
 
-- **Authentication:** Securely identify users before granting access to protected functionality.
-- **Role-based authorization:** Restrict privileged operations to authorized roles.
-- **Row Level Security:** Enforce database-level access policies in Supabase.
-- **Input validation:** Validate submitted data at appropriate application and server boundaries.
-- **Inventory consistency:** Use appropriate database transactions or atomic operations for related inventory and distribution updates.
-- **Auditability:** Preserve relevant records of request decisions and distribution outcomes.
-- **QR validation:** Validate collection identifiers and prevent unauthorized or repeated use where applicable.
-- **Environment security:** Keep secret keys and privileged credentials out of client-side code and version control.
+- **Authentication:** Identify users before granting access to protected functionality.
+- **Authorization:** Restrict privileged actions to appropriately authorized roles.
+- **Row Level Security:** Enforce database-level access rules through Supabase RLS policies.
+- **Input validation:** Validate submitted data at appropriate client and server boundaries.
+- **Data integrity:** Keep related inventory and distribution updates consistent.
+- **Auditability:** Maintain relevant records of request decisions and distribution outcomes.
+- **QR validation:** Validate collection identifiers and prevent unauthorized or repeated use where required.
+- **Secret management:** Keep privileged credentials out of client-side code and version control.
 
 These are implementation requirements and design goals, not a claim that every control has already been completed or independently audited.
-
----
 
 ## Getting Started
 
 ### Prerequisites
 
-Ensure that the following tools are installed:
+Before running the project, ensure you have:
 
-- Node.js (a version compatible with the project's Next.js dependencies)
-- npm
-- Git
-- A Supabase project
+- [Node.js](https://nodejs.org/) compatible with the project's Next.js version.
+- npm.
+- [Git](https://git-scm.com/).
+- A Supabase project for features that depend on Supabase.
 
-### Installation
+### 1. Clone the repository
 
-1. Clone the repository:
-
-   ```bash
-   git clone <repository-url>
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd hands-of-hope
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Create a `.env.local` file in the project root and configure the required environment variables.
-
-   For a standard Supabase client setup, these commonly include:
-
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-publishable-key
-   ```
-
-   Use the variable names expected by the project's Supabase client configuration. Never commit real credentials or service-role secrets.
-
-5. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Available Scripts
-
-The following scripts are typical for a Next.js project; verify them against the repository's `package.json`.
+Replace `<https://github.com/spectredev25-star/hands-of-hope.git>` with the actual repository URL.
 
 ```bash
-npm run dev      # Start the development server
-npm run build    # Create a production build
-npm run start    # Start the production server
-npm run lint     # Run linting, if configured
+git clone <https://github.com/spectredev25-star/hands-of-hope.git>
+cd hands-of-hope
 ```
 
-Database migrations, seed data, and required Supabase policies should be configured before testing database-dependent workflows.
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root.
+
+For a standard Supabase client setup, the configuration may include:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-publishable-key
+```
+
+Use the exact variable names expected by your project's Supabase client configuration. Never commit real credentials or service-role secrets.
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Available scripts
+
+Check `package.json` to confirm which scripts are configured in the repository.
+
+A typical Next.js project may include:
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+Database migrations, seed data, and Supabase policies should also be configured before testing database-dependent workflows.
 
 ---
 
 ## Project Structure
 
-The following is a proposed high-level structure. The actual repository may differ as implementation develops.
+The following is an illustrative structure. Update it to match the actual repository as implementation develops.
 
 ```text
 hands-of-hope/
@@ -354,7 +426,6 @@ hands-of-hope/
 │   ├── auth/
 │   └── validations/
 ├── public/
-│   └── images/
 ├── supabase/
 │   └── migrations/
 ├── .env.example
@@ -363,38 +434,32 @@ hands-of-hope/
 └── README.md
 ```
 
----
-
 ## Future Improvements
 
-Potential extensions beyond the core MVP include:
+Potential improvements beyond the core MVP include:
 
-- More advanced assistance-matching and recommendation capabilities.
+- More advanced resource-matching and recommendation capabilities.
 - Analytics for resource availability and distribution outcomes.
-- Improved reporting for administrators and resource providers.
-- Integration with external logistics and delivery providers.
 - Notifications for important request-status changes.
-- Additional operational tools informed by user feedback.
+- Integration with external logistics and delivery providers.
+- Additional reporting tools for administrators and resource providers.
+- Further improvements guided by user feedback and testing.
 
-These improvements will be prioritized based on MVP validation, technical feasibility, and the needs identified during testing.
-
----
+These improvements will be prioritized according to user needs, technical feasibility, and the reliability of the core workflow.
 
 ## Contributing
 
-Hands of Hope is developed collaboratively by **Transformative Creatives**.
+Hands of Hope is being developed collaboratively by **Transformative Creatives**.
 
-For contributors:
+Contributors should:
 
-1. Create a feature branch from the agreed development branch.
+1. Create a feature branch using the team's agreed branching convention.
 2. Keep changes focused and consistent with the existing architecture.
-3. Validate relevant functionality before submitting changes.
-4. Document environment variables and configuration changes.
-5. Submit a pull request describing the implementation and any outstanding issues.
+3. Test affected functionality before submitting changes.
+4. Document configuration and environment-variable changes.
+5. Describe the implementation and any known limitations in the pull request.
 
-Security-sensitive changes, especially those involving authorization, database policies, inventory, or distribution records, should receive careful review.
-
----
+Changes involving authorization, database policies, inventory, or distribution records require particular care.
 
 ## Team
 
@@ -402,13 +467,16 @@ Security-sensitive changes, especially those involving authorization, database p
 
 Building technology to make community assistance more accessible, coordinated, and accountable.
 
----
-
 ## License
 
-A license has not yet been specified. Until one is added to the repository, the project's reuse and redistribution terms remain undefined.
+A license has not yet been specified. Until a license is added to the repository, reuse and redistribution permissions are not explicitly granted.
 
 ---
 
-*Hands of Hope — Connecting needs, resources, and people through accountable technology.*#   h a n d s - o f - h o p e  
- 
+<div align="center">
+
+**Hands of Hope**
+
+*Connecting needs, resources, and people through accountable technology.*
+
+</div>
