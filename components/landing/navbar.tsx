@@ -11,7 +11,6 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "Our Impact", href: "#impact" },
 ];
 
 export function Navbar() {
@@ -22,7 +21,7 @@ export function Navbar() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="absolute inset-x-0 top-0 z-50"
+      className="fixed inset-x-0 top-0 z-50 bg-[#172524]"
     >
       <nav className="container-shell flex h-20 items-center justify-between border-b border-white/10">
         <Link

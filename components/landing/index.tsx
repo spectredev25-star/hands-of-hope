@@ -2,7 +2,9 @@ import { Navbar } from "./navbar";
 import { HeroSection } from "./hero-section";
 import { ProblemSection } from "./problem-section";
 import { WorkflowSection } from "./workflow-section";
-
+import  AudienceSection  from "./audience-section";
+import  TrustSection  from "./trust-section";
+import Footer from "./footer";
 
 export default function LandingPage() {
   return (
@@ -15,8 +17,12 @@ export default function LandingPage() {
         <ProblemSection />
 
         <WorkflowSection />
-      </main>
 
+        <AudienceSection />
+
+        <TrustSection />
+      </main>
+    <Footer />
     </>
   );
 }
