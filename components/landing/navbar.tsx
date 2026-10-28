@@ -58,7 +58,7 @@ export function Navbar() {
             className="rounded-full border-white/25 bg-white/5 px-5 text-white hover:bg-white/10 hover:text-white"
             asChild
           >
-            <Link href="/login">Log in</Link>
+            <Link href="/signup">Sign Up</Link>
           </Button>
 
           <Button
