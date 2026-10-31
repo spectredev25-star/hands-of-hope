@@ -3,8 +3,7 @@
 import type { InputHTMLAttributes } from "react";
 import type { LucideIcon } from "lucide-react";
 
-interface FormFieldProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   Icon?: LucideIcon;
   error?: string;

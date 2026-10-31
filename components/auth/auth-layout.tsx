@@ -18,7 +18,7 @@ export default function AuthLayout({
       <AuthBrandPanel />
 
       {/* Form panel */}
-      <section className="relative flex min-h-screen flex-col justify-center px-5 py-10 sm:px-10 lg:px-16 xl:px-24">
+      <section className="relative flex min-h-screen flex-col justify-center px-5 py-5 sm:px-10 lg:px-16 xl:px-24">
         {/* Mobile brand */}
         <Link
           href="/"

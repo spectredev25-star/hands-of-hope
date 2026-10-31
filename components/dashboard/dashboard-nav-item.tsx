@@ -1,5 +1,7 @@
+
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
@@ -11,6 +13,24 @@ type Props = {
 };
 
 export function DashboardNavItemLink({ item }: Props) {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[#F1F5F4]/50"
+          aria-hidden="true"
+        >
+          <item.icon size={19} strokeWidth={1.8} />
+          <span>{item.label}</span>
+        </div>
+      }
+    >
+      <DashboardNavItemLinkContent item={item} />
+    </Suspense>
+  );
+}
+
+function DashboardNavItemLinkContent({ item }: Props) {
   const pathname = usePathname();
 
   const isActive =
@@ -37,7 +57,7 @@ export function DashboardNavItemLink({ item }: Props) {
       {isActive && (
         <motion.span
           layoutId="dashboard-active-indicator"
-          className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#99F6E4]"
+          className="absolute bottom-2 left-0 top-2 w-1 rounded-r-full bg-[#99F6E4]"
           transition={{
             type: "spring",
             stiffness: 380,

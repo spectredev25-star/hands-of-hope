@@ -1,14 +1,19 @@
-import type { ReactNode } from "react";
-
+import { requireRole } from "@/libs/auth/authorize";
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { beneficiaryNavigation } from "@/libs/dashboard/navigation";
 
-type Props = {
-  children: ReactNode;
-};
+export default async function BeneficiaryLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { user } = await requireRole(["beneficiary"]);
 
-export default function BeneficiaryLayout({ children }: Props) {
   return (
-    <DashboardShell>
+    <DashboardShell
+      navigation={beneficiaryNavigation}
+      user={user}
+    >
       {children}
     </DashboardShell>
   );

@@ -56,7 +56,7 @@ export default function BeneficiaryDashboardPage() {
   );
 
   return (
-    <div className="space-y-9 sm:space-y-10">
+    <div className="space-y-6 sm:space-y-5">
       <DashboardPageHeader
         eyebrow="YOUR SPACE"
         title="A little progress, every day."

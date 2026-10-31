@@ -26,6 +26,7 @@ export type Resource = {
 };
 
 export type AssistanceRequest = {
+  category: any;
   id: string;
   resourceName: string;
   status: RequestStatus;

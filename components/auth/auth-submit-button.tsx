@@ -30,7 +30,6 @@ export default function AuthSubmitButton({
       ) : (
         <>
           {children}
-
           <ArrowRight
             size={17}
             className="transition-transform duration-200 group-hover:translate-x-1"

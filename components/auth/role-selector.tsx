@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { HeartHandshake, Building2, Check } from "lucide-react";
+import { HeartHandshake, Building2 } from "lucide-react";
 
 export type UserRole = "beneficiary" | "organization";
 
@@ -12,16 +12,16 @@ interface RoleSelectorProps {
 
 const roles = [
   {
-    id: "beneficiary" as const,
-    title: "I need support",
-    description: "Discover resources and request assistance.",
-    Icon: HeartHandshake,
+    value: "beneficiary" as const,
+    label: "Beneficiary",
+    description: "I need assistance and support.",
+    icon: HeartHandshake,
   },
   {
-    id: "organization" as const,
-    title: "I'm an organization",
-    description: "Share resources and support communities.",
-    Icon: Building2,
+    value: "organization" as const,
+    label: "Organization",
+    description: "I want to contribute resources.",
+    icon: Building2,
   },
 ];
 
@@ -30,53 +30,34 @@ export default function RoleSelector({
   onChange,
 }: RoleSelectorProps) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-      {roles.map(({ id, title, description, Icon }) => {
-        const selected = value === id;
+    <div className="grid grid-cols-2 gap-3">
+      {roles.map((role) => {
+        const Icon = role.icon;
+        const active = value === role.value;
 
         return (
           <motion.button
-            key={id}
+            key={role.value}
             type="button"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.99 }}
-            onClick={() => onChange(id)}
-            aria-pressed={selected}
-            className={`relative flex min-h-[126px] flex-col rounded-2xl border p-4 text-left transition-colors duration-200 ${
-              selected
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onChange(role.value)}
+            aria-pressed={active}
+            className={`rounded-xl border p-4 text-left transition ${
+              active
                 ? "border-[#0F766E] bg-[#F0FDFA] ring-2 ring-[#0F766E]/10"
-                : "border-slate-200 bg-white hover:border-slate-300"
+                : "border-slate-200 bg-white hover:border-teal-300"
             }`}
           >
-            <div className="mb-3 flex w-full items-center justify-between">
-              <span
-                className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-                  selected
-                    ? "bg-[#0F766E] text-white"
-                    : "bg-slate-100 text-slate-600"
-                }`}
-              >
-                <Icon size={21} />
-              </span>
-
-              {selected && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0F766E] text-white"
-                >
-                  <Check size={12} />
-                </motion.span>
-              )}
-            </div>
-
-            <span className="text-sm font-semibold text-[#071B1A]">
-              {title}
-            </span>
-
-            <span className="mt-1 text-xs leading-5 text-slate-500">
-              {description}
-            </span>
+            <Icon
+              size={22}
+              className={active ? "text-[#0F766E]" : "text-slate-400"}
+            />
+            <p className="mt-3 text-sm font-semibold text-[#071B1A]">
+              {role.label}
+            </p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">
+              {role.description}
+            </p>
           </motion.button>
         );
       })}

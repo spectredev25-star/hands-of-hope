@@ -65,8 +65,8 @@ export function Navbar() {
             className="rounded-full bg-teal-500 px-5 text-slate-950 hover:bg-teal-400"
             asChild
           >
-            <Link href="/register">
-              Get Started
+            <Link href="/login">
+              Log In 
               <ArrowUpRight className="ml-1 size-4" />
             </Link>
           </Button>
