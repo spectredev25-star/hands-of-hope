@@ -1,20 +1,93 @@
 "use client";
 
 import Link from "next/link";
-import { HeartHandshake, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  HeartHandshake,
+  ArrowUpRight,
+  LayoutDashboard,
+  Package,
+  ClipboardList,
+  UserRound,
+  type LucideIcon,
+} from "lucide-react";
 
 import { beneficiaryNavigation } from "@/libs/dashboard/navigation";
 import { DashboardNavItemLink } from "./dashboard-nav-item";
 
-type Props = {
-  mobile?: boolean;
-  onNavigate?: () => void;
+type SidebarNavItem = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  description?: string;
 };
+
+const organizationNavigation: SidebarNavItem[] = [
+  {
+    label: "Overview",
+    href: "/organization/dashboard",
+    icon: LayoutDashboard,
+    description: "Organization overview",
+  },
+  {
+    label: "My contributions",
+    href: "/organization/contributions",
+    icon: Package,
+    description: "Track submitted contributions",
+  },
+  {
+    label: "New contribution",
+    href: "/organization/contributions/new",
+    icon: ClipboardList,
+    description: "Propose resources",
+  },
+  {
+    label: "Profile",
+    href: "/organization/profile",
+    icon: UserRound,
+    description: "Manage organization details",
+  },
+];
 
 export function DashboardSidebar({
   mobile = false,
   onNavigate,
-}: Props) {
+}: {
+  mobile?: boolean;
+  onNavigate?: () => void;
+}) {
+  const pathname = usePathname();
+
+  const isOrganization = pathname.startsWith("/organization");
+
+  const navigation: SidebarNavItem[] = isOrganization
+    ? organizationNavigation
+    : beneficiaryNavigation;
+
+  const sectionTitle = isOrganization
+    ? "Organization"
+    : "Your space";
+
+  const workspaceDescription = isOrganization
+    ? "Partner workspace"
+    : "Your support space";
+
+  const footerTitle = isOrganization
+    ? "Together, we can help."
+    : "Small steps matter.";
+
+  const footerDescription = isOrganization
+    ? "Your contributions help bring essential resources to people."
+    : "We're here to help you find the support you need.";
+
+  const footerLink = isOrganization
+    ? "/organization/contributions"
+    : "/beneficiary/resources";
+
+  const footerLinkText = isOrganization
+    ? "View contributions"
+    : "Explore resources";
+
   return (
     <aside
       className={[
@@ -22,6 +95,7 @@ export function DashboardSidebar({
         mobile ? "w-full" : "w-[256px]",
       ].join(" ")}
     >
+      {/* Brand */}
       <Link
         href="/"
         onClick={onNavigate}
@@ -37,21 +111,22 @@ export function DashboardSidebar({
           </span>
 
           <span className="mt-0.5 text-xs text-[#F1F5F4]/50">
-            Your support space
+            {workspaceDescription}
           </span>
         </span>
       </Link>
 
+      {/* Navigation */}
       <div className="px-4 pt-7">
         <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F1F5F4]/40">
-          Your space
+          {sectionTitle}
         </p>
 
         <nav
-          aria-label="Beneficiary navigation"
+          aria-label={`${sectionTitle} navigation`}
           className="space-y-1.5"
         >
-          {beneficiaryNavigation.map((item) => (
+          {navigation.map((item) => (
             <div key={item.href} onClick={onNavigate}>
               <DashboardNavItemLink item={item} />
             </div>
@@ -59,6 +134,7 @@ export function DashboardSidebar({
         </nav>
       </div>
 
+      {/* Encouragement panel */}
       <div className="mt-auto p-4">
         <div className="rounded-2xl border border-[#244540] bg-[#0D2927] p-4">
           <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-[#0F766E]/20 text-[#99F6E4]">
@@ -66,19 +142,19 @@ export function DashboardSidebar({
           </div>
 
           <p className="text-sm font-medium">
-            Small steps matter.
+            {footerTitle}
           </p>
 
           <p className="mt-1.5 text-xs leading-5 text-[#F1F5F4]/60">
-            We're here to help you find the support you need.
+            {footerDescription}
           </p>
 
           <Link
-            href="/beneficiary/resources"
+            href={footerLink}
             onClick={onNavigate}
             className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[#99F6E4] transition-opacity hover:opacity-80"
           >
-            Explore resources
+            {footerLinkText}
             <ArrowUpRight size={14} />
           </Link>
         </div>

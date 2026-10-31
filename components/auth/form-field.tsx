@@ -20,7 +20,7 @@ export default function FormField({
   const inputId = id ?? props.name;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       <label
         htmlFor={inputId}
         className="block text-sm font-medium text-[#071B1A]"
@@ -29,7 +29,7 @@ export default function FormField({
       </label>
 
       <div
-        className={`flex h-12 items-center gap-3 rounded-xl border bg-white px-3.5 transition-all duration-200 focus-within:border-[#0F766E] focus-within:ring-4 focus-within:ring-[#0F766E]/10 ${
+        className={`flex h-9 items-center gap-3 rounded-xl border bg-white px-3.5 transition-all duration-200 focus-within:border-[#0F766E] focus-within:ring-4 focus-within:ring-[#0F766E]/10 ${
           error ? "border-red-400" : "border-slate-200"
         }`}
       >

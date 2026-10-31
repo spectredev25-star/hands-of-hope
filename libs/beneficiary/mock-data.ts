@@ -35,6 +35,7 @@ export const mockRequests: AssistanceRequest[] = [
   {
     id: "REQ-1042",
     resourceName: "Family Food Support",
+    category: "food",
     status: "pending_review",
     submittedAt: "2026-10-25",
     updatedAt: "2026-10-25",
@@ -42,6 +43,7 @@ export const mockRequests: AssistanceRequest[] = [
   {
     id: "REQ-1031",
     resourceName: "Learning Essentials",
+    category: "education",
     status: "approved",
     submittedAt: "2026-10-20",
     updatedAt: "2026-10-24",

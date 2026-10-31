@@ -8,7 +8,6 @@ export type AppRole = "beneficiary" | "organization" | "admin";
 export async function getAuthorizedUser() {
   const supabase = await createClient();
 
-  // Verify the user's actual Supabase session.
   const {
     data: { user },
     error: authError,
@@ -18,10 +17,9 @@ export async function getAuthorizedUser() {
     return null;
   }
 
-  // Read the role from the protected profiles table.
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("id, role, approval_status")
+    .select("id, role")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -29,13 +27,13 @@ export async function getAuthorizedUser() {
     return null;
   }
 
-  const allowedRoles: AppRole[] = [
+  const allowedRoles: string[] = [
     "beneficiary",
     "organization",
     "admin",
   ];
 
-  if (!allowedRoles.includes(profile.role as AppRole)) {
+  if (!allowedRoles.includes(profile.role)) {
     return null;
   }
 
@@ -55,14 +53,6 @@ export async function requireRole(allowedRoles: AppRole[]) {
 
   if (!allowedRoles.includes(result.role)) {
     redirect("/unauthorized");
-  }
-
-  // Optional organization approval check.
-  if (
-    result.role === "organization" &&
-    result.profile.approval_status !== "approved"
-  ) {
-    redirect("/pending-approval");
   }
 
   return result;

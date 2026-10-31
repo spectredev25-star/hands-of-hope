@@ -37,7 +37,7 @@ export default function AuthLayout({
           {children}
         </div>
 
-        <p className="mt-10 text-center text-xs leading-6 text-slate-500">
+        <p className="mt-5 text-center text-xs leading-6 text-slate-500">
           By continuing, you agree to our{" "}
           <Link
             href="/terms"

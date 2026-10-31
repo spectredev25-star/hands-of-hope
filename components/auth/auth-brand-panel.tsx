@@ -8,7 +8,7 @@ export function AuthBrandPanel() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <aside className="relative hidden min-h-screen flex-col justify-between overflow-hidden bg-[#071B1A] p-10 text-white lg:flex xl:p-14">
+    <aside className="relative hidden h-full flex-col justify-between overflow-hidden bg-[#071B1A] p-10 text-white lg:flex xl:p-14">
       {/* Background decoration */}
       <div className="pointer-events-none absolute -left-32 top-20 h-80 w-80 rounded-full bg-[#0F766E]/20 blur-[100px]" />
 
@@ -29,7 +29,7 @@ export function AuthBrandPanel() {
       </Link>
 
       {/* Illustration */}
-      <div className="relative mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center py-12">
+      <div className="relative mx-auto flex w-full max-w-lg flx-1 flex-col items-center justify-center py-12">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
