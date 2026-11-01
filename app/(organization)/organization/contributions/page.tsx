@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { connection } from "next/server";
 import { ArrowRight, PackagePlus, ClipboardList } from "lucide-react";
 
 import { requireRole } from "@/libs/auth/authorize";
@@ -23,8 +22,9 @@ const statusLabels: Record<string, string> = {
   rejected: "Not accepted",
 };
 
+export const instant = false;
+
 export default async function OrganizationContributionsPage() {
-  await connection();
   const { user } = await requireRole(["organization"]);
   const supabase = await createClient();
 
