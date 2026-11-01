@@ -96,6 +96,10 @@ export async function updateOrganizationProfile(formData: FormData) {
     redirect("/organization/profile?error=organization-save-failed");
   }
 
+  // Refresh the shared organization layout as well as the profile page.
+  // The layout supplies avatar_url to the workspace topbar, so it must be
+  // revalidated after an avatar upload or the header can keep stale data.
+  revalidatePath("/organization", "layout");
   revalidatePath("/organization/profile");
   revalidatePath("/organization/dashboard");
   redirect("/organization/profile?updated=1");
