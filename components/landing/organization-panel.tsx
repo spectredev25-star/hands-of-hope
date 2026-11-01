@@ -178,7 +178,7 @@ export default function OrganizationPanel() {
 
       <div className="audience-panel__footer">
         <Link
-          href="/organizations"
+          href="/signup"
           className="audience-cta audience-cta--dark"
         >
           Explore the platform
