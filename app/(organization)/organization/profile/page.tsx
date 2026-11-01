@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import Image from "next/image";
 import { Building2, Check, CircleUserRound, Mail, MapPin, ShieldCheck } from "lucide-react";
 
 import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-header";
@@ -16,6 +17,9 @@ const errorMessages: Record<string, string> = {
   "invalid-name": "Please enter a valid contact name.",
   "invalid-phone": "Your phone number is too long.",
   "save-failed": "We couldn't save your changes. Please try again.",
+  "invalid-avatar-type": "Choose a PNG, JPG or WebP image.",
+  "avatar-too-large": "Your profile image must be 2 MB or smaller.",
+  "avatar-upload-failed": "We couldn't upload your profile image. Please try again.",
 };
 
 const verificationLabels: Record<string, string> = {
@@ -35,7 +39,7 @@ export default async function OrganizationProfilePage({ searchParams }: ProfileP
 
   const [{ data: profile, error: profileError }, { data: organization, error: organizationError }] =
     await Promise.all([
-      supabase.from("profiles").select("full_name, email, phone").eq("id", user.id).single(),
+      supabase.from("profiles").select("full_name, email, phone, avatar_url").eq("id", user.id).single(),
       supabase
         .from("organizations")
         .select("organization_name, description, email, phone, address, verification_status")
@@ -82,6 +86,20 @@ export default async function OrganizationProfilePage({ searchParams }: ProfileP
         </div>
 
         <form action={updateOrganizationProfile} className="mt-6 space-y-5">
+          <div className="flex flex-col gap-4 rounded-2xl border border-dashed border-[#B8D2CB] bg-[#F8FAF7] p-4 dark:border-[#315B54] dark:bg-[#071B1A]/60 sm:flex-row sm:items-center">
+            <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#0F766E]/10 text-[#0F766E] dark:bg-[#14B8A6]/10 dark:text-[#99F6E4]">
+              {profile.avatar_url ? (
+                <Image src={profile.avatar_url} alt="Organization profile image" fill sizes="80px" className="object-cover" unoptimized />
+              ) : (
+                <Building2 size={30} strokeWidth={1.5} />
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <label htmlFor="organization-avatar" className="block text-sm font-semibold text-[#172524] dark:text-[#F1F5F4]">Organization profile image</label>
+              <input id="organization-avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/webp" className="mt-2 block w-full text-sm text-[#64748B] file:mr-3 file:rounded-lg file:border-0 file:bg-[#0F766E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-[#0D625B] dark:text-[#9AafAA]" />
+              <p className="mt-2 text-xs leading-5 text-[#64748B] dark:text-[#9AafAA]">PNG, JPG or WebP · Maximum 2 MB. This image will identify your organization across the workspace.</p>
+            </div>
+          </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-[#172524] dark:text-[#F1F5F4]">Contact person's name</span>
