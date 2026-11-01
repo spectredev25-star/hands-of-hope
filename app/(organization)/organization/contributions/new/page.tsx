@@ -33,11 +33,13 @@ export default function NewContributionPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    event.preventDefault();
+    const form = event.currentTarget;
     setError("");
     setSuccess("");
     setSubmitting(true);
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const payload = {
       item_name: String(formData.get("item_name") ?? ""),
       category: String(formData.get("category") ?? ""),
@@ -61,7 +63,7 @@ export default function NewContributionPage() {
       }
 
       setSuccess("Your contribution has been submitted. Our team will review it shortly.");
-      event.currentTarget.reset();
+      form.reset();
 
       window.setTimeout(() => {
         router.push("/organization/contributions");
