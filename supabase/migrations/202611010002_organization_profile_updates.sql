@@ -26,8 +26,6 @@ begin
   if public.current_app_role() = 'organization' then
     new.profile_id := old.profile_id;
     new.verification_status := old.verification_status;
-    new.reviewed_by := old.reviewed_by;
-    new.reviewed_at := old.reviewed_at;
   end if;
 
   return new;
