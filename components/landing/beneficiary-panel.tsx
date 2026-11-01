@@ -174,7 +174,7 @@ export default function BeneficiaryPanel() {
 
       <div className="audience-panel__footer">
         <Link
-          href="/resources"
+          href="/signup"
           className="audience-cta audience-cta--light"
         >
           Explore resources

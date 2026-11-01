@@ -44,12 +44,12 @@ export default function FooterCTA() {
         </p>
 
         <div className="footer-cta-actions">
-          <Link href="/resources" className="footer-cta-primary">
+          <Link href="/signup" className="footer-cta-primary">
             Find Support
             <ArrowRight size={17} />
           </Link>
 
-          <Link href="/register?role=organization" className="footer-cta-secondary">
+          <Link href="/signup" className="footer-cta-secondary">
             Become a Partner
             <ArrowRight size={17} />
           </Link>

@@ -142,6 +142,11 @@ export default async function OrganizationProfilePage({ searchParams }: ProfileP
                 className="h-12 w-full rounded-xl border border-[#DCE7E2] bg-[#FAFAF7] px-4 text-sm text-[#172524] outline-none transition focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/15 dark:border-[#244540] dark:bg-[#071B1A] dark:text-[#F1F5F4] dark:placeholder:text-[#F1F5F4]/35" />
             </label>
           </div>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-[#DCE7E2] pt-5 dark:border-[#244540]">
+            <SaveProfileButton />
+            <p className="text-xs text-[#64748B] dark:text-[#9AafAA]">Save your contact details and profile image.</p>
+          </div>
         </section>
 
         <section className="rounded-2xl border border-[#DCE7E2] bg-white p-6 dark:border-[#244540] dark:bg-[#0D2927] sm:p-8">
@@ -192,13 +197,12 @@ export default async function OrganizationProfilePage({ searchParams }: ProfileP
           <p className="mt-6 border-t border-[#DCE7E2] pt-4 text-xs leading-5 text-[#64748B] dark:border-[#244540] dark:text-[#F1F5F4]/45">
             Your verification status is managed by the Hands of Hope team and cannot be changed here.
           </p>
+          <div className="mt-6 flex flex-col gap-3 border-t border-[#DCE7E2] pt-5 dark:border-[#244540] sm:flex-row sm:items-center">
+            <SaveProfileButton />
+            {params.updated === "1" && <p role="status" className="text-sm text-[#0F766E] dark:text-[#99F6E4]">Your profile and organization information have been updated.</p>}
+            {errorMessage && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{errorMessage}</p>}
+          </div>
         </section>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <SaveProfileButton />
-          {params.updated === "1" && <p role="status" className="text-sm text-[#0F766E] dark:text-[#99F6E4]">Your profile and organization information have been updated.</p>}
-          {errorMessage && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{errorMessage}</p>}
-        </div>
       </form>
     </div>
   );

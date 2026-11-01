@@ -19,23 +19,23 @@ const footerGroups = [
     links: [
       { label: "Home", href: "/#home" },
       { label: "Our Mission", href: "/#mission" },
-      { label: "How It Works", href: "/#workflow" },
-      { label: "Trust & Accountability", href: "/#trust" },
+      { label: "How It Works", href: "/#how-it-works" },
+      { label: "Trust & Accountability", href: "/#accountability" },
     ],
   },
   {
     title: "Get Involved",
     links: [
-      { label: "Find Support", href: "/resources" },
+      { label: "Find Support", href: "/signup" },
       {
         label: "Share Resources",
-        href: "/register?role=organization",
+        href: "/signup",
       },
       {
         label: "Become a Partner",
-        href: "/register?role=organization",
+        href: "/signup",
       },
-      { label: "Create an Account", href: "/register" },
+      { label: "Create an Account", href: "/signup" },
     ],
   },
 ];
@@ -105,7 +105,7 @@ export default function Footer() {
             </p>
 
             <a
-              href="mailto:contact@handsofhope.example"
+              href="/signup"
               className="footer-contact-link"
             >
               <span className="footer-contact-icon">
@@ -113,8 +113,8 @@ export default function Footer() {
               </span>
 
               <span>
-                <small>Email our team</small>
-                <strong>Contact us</strong>
+                <small>Get involved</small>
+                <strong>Create an account</strong>
               </span>
 
               <ArrowRight
@@ -145,9 +145,9 @@ export default function Footer() {
             aria-label="Legal navigation"
             className="footer-legal-links"
           >
-            <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/terms">Terms of Use</Link>
-            <Link href="/#trust">Accountability</Link>
+            <span className="text-slate-500">Privacy information coming soon</span>
+            <span className="text-slate-500">Terms information coming soon</span>
+            <Link href="/#accountability">Accountability</Link>
           </nav>
         </div>
       </footer>

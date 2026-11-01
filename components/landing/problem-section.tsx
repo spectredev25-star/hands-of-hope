@@ -90,6 +90,7 @@ export function ProblemSection() {
             duration: reduceMotion ? 0 : 0.7,
             ease: "easeOut",
           }}
+          id="mission"
           className="mx-auto max-w-3xl text-center"
         >
           <div className="problem-eyebrow">

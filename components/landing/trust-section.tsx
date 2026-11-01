@@ -102,7 +102,7 @@ export default function TrustSection() {
             </div>
 
             <Link
-              href="#workflow"
+              href="#how-it-works"
               className="mt-7 inline-flex items-center gap-2 rounded-lg py-2 text-sm font-semibold text-teal-200 transition-colors hover:text-teal-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#071B1A]"
             >
               Revisit the workflow
