@@ -33,7 +33,7 @@ const footerGroups = [
       },
       {
         label: "Become a Partner",
-        href: "/register?role=organization",
+        href: "/signup",
       },
       { label: "Create an Account", href: "/signup" },
     ],
