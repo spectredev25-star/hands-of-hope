@@ -1,4 +1,3 @@
-import { Navbar } from "./navbar";
 import { HeroSection } from "./hero-section";
 import { ProblemSection } from "./problem-section";
 import { WorkflowSection } from "./workflow-section";
@@ -9,8 +8,6 @@ import Footer from "./footer";
 export default function LandingPage() {
   return (
     <>
-      <Navbar />
-
       <main>
         <HeroSection />
 
