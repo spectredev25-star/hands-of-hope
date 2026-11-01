@@ -2,13 +2,14 @@
 
 ### Connecting people, resources, and communities through accountable technology.
 
-Hands of Hope is a social-impact platform designed to improve how people access assistance and how resources are coordinated, reviewed, and distributed within communities.
+Hands of Hope is a social-impact platform designed to improve how individuals access assistance and how charitable resources are coordinated, reviewed, collected, and distributed.
 
-By bringing resource discovery, assistance requests, review processes, and distribution records into a structured digital workflow, the platform aims to make community support more accessible, organized, transparent, and accountable.
+The platform connects beneficiaries, charitable organizations, and administrators through a structured digital workflow. It aims to make assistance easier to access while improving resource coordination, transparency, and accountability.
 
 **Team:** Transformative Creatives  
 **Project type:** Social Impact / Full-Stack Web Application  
-**Development status:** In Development
+**Development status:** MVP Development  
+**Deployment:** [Hands of Hope](https://hands-of-hope.vercel.app/)
 
 ---
 
@@ -17,14 +18,20 @@ By bringing resource discovery, assistance requests, review processes, and distr
 - [Overview](#overview)
 - [The Problem](#the-problem)
 - [Our Solution](#our-solution)
-- [Project Objectives](#project-objectives)
+- [Core User Roles](#core-user-roles)
 - [Core Features](#core-features)
-- [Development Roadmap](#development-roadmap)
+- [Current Implementation Status](#current-implementation-status)
 - [System Architecture](#system-architecture)
+- [Core Workflows](#core-workflows)
+- [Database Architecture](#database-architecture)
 - [Technology Stack](#technology-stack)
-- [Security and Accountability](#security-and-accountability)
-- [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
+- [Security and Data Integrity](#security-and-data-integrity)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Database Setup](#database-setup)
+- [Development Commands](#development-commands)
+- [Development Roadmap](#development-roadmap)
 - [Future Improvements](#future-improvements)
 - [Contributing](#contributing)
 - [Team](#team)
@@ -34,328 +41,746 @@ By bringing resource discovery, assistance requests, review processes, and distr
 
 ## Overview
 
-Accessing essential assistance can be difficult when information is scattered across different channels, requests are handled manually, and the outcomes of resource distribution are difficult to track.
+Accessing essential assistance can be difficult when information is scattered across different channels, resource providers operate independently, and distribution processes depend on manual coordination.
 
-Hands of Hope is being developed to provide a centralized platform for managing the assistance journey, from discovering available resources to recording distribution outcomes.
+Hands of Hope provides a centralized platform for managing the assistance journey, from resource contributions and beneficiary requests to collection coordination and distribution records.
 
-The project focuses on three core principles:
+The platform is built around three principles:
 
-- **Accessibility:** Make available resources easier to discover.
-- **Transparency:** Provide clearer request statuses and structured review processes.
-- **Accountability:** Maintain traceable records of decisions, collections, and distributions.
+- **Accessibility:** Make available assistance and resources easier to discover.
+- **Transparency:** Provide clear request statuses and structured review processes.
+- **Accountability:** Maintain traceable records of contributions, inventory, approvals, and distributions.
 
-The objective is to support a more coordinated process between people seeking assistance, resource providers, and authorized administrators.
+The goal is to create a reliable connection between people who need assistance, organizations willing to provide resources, and the team responsible for coordinating their distribution.
 
 ## The Problem
 
-Community assistance often involves several stakeholders, including individuals seeking support, resource providers, volunteers, and administrators.
+Community assistance involves multiple stakeholders, including beneficiaries, charitable organizations, volunteers, and administrators.
 
-Without a shared and structured process, these stakeholders may encounter difficulties such as:
+Without a centralized system, these stakeholders may encounter:
 
 - Limited visibility into available resources.
 - Unclear procedures for requesting assistance.
-- Difficulty tracking the progress of submitted requests.
-- Challenges coordinating resources with approved needs.
-- Inconsistent inventory and distribution records.
-- Limited visibility into whether approved assistance was actually distributed.
+- Difficulty coordinating contributions from different organizations.
+- Poor visibility into collection and inspection processes.
+- Inconsistent inventory records.
+- Difficulty tracking approved assistance through final distribution.
+- Limited accountability when resources are handled manually.
 
-When these processes depend on fragmented communication and manual record-keeping, coordination becomes more difficult and accountability can suffer.
-
-Hands of Hope addresses these challenges through a centralized digital workflow for discovering resources, managing requests, coordinating distribution, and maintaining relevant records.
+Hands of Hope addresses these challenges by introducing a structured digital workflow that connects resource providers, beneficiaries, and administrators.
 
 ## Our Solution
 
-Hands of Hope aims to connect people, resources, and community support through a structured assistance workflow.
+Hands of Hope introduces a centralized resource and assistance management platform.
 
-The proposed process follows five stages:
+The intended process follows five major stages:
 
-1. **Discover:** Explore available resources and assistance opportunities.
-2. **Request:** Submit a structured request explaining the assistance needed.
-3. **Review:** Allow authorized personnel to assess requests and record decisions.
-4. **Collect:** Coordinate the collection of approved assistance.
-5. **Record:** Document distribution outcomes to support accountability.
+1. **Contribute:** Organizations submit information about resources they want to donate.
+2. **Collect and Inspect:** Hands of Hope coordinates collection, inspects received resources, and accepts eligible contributions.
+3. **Discover and Request:** Beneficiaries explore available resources and submit assistance requests.
+4. **Review and Approve:** Authorized administrators review requests and coordinate resource allocation.
+5. **Distribute and Record:** Approved assistance is prepared for collection, verified, and recorded after handover.
 
-Each stage has a distinct purpose. Submitting a request does not automatically mean it has been approved, and approval alone does not confirm that assistance has been received.
+An important distinction is maintained throughout the workflow:
 
-## Project Objectives
+Submitting a contribution does not mean it has been accepted into inventory. Similarly, submitting an assistance request does not mean it has been approved, and approval does not automatically mean assistance has been received.
 
-- Improve access to information about available resources.
-- Establish a consistent process for submitting and reviewing assistance requests.
-- Improve coordination between recipients, resource providers, and administrators.
-- Maintain reliable inventory and distribution records.
-- Make request progress and relevant decisions easier to understand.
-- Introduce transparent, rule-based recommendations for matching needs with available resources.
-- Establish appropriate security and authorization controls for sensitive operations.
+---
+
+## Core User Roles
+
+The application uses role-based access control to separate user responsibilities.
+
+| Role | Responsibilities |
+|---|---|
+| Beneficiary | Discover available resources, submit assistance requests, and track request progress. |
+| Organization | Submit resource contributions, provide collection information, and monitor contribution progress. |
+| Administrator | Review contributions, coordinate collections, manage inventory, review assistance requests, and oversee distribution. |
+
+### 1. Beneficiary
+
+Beneficiaries are individuals seeking assistance.
+
+Their intended dashboard provides access to:
+
+- Personal profile management.
+- Available resources.
+- Assistance request submission.
+- Request history and status tracking.
+- Collection and distribution information where applicable.
+
+### 2. Organization
+
+Organizations are resource providers that contribute items or services to the Hands of Hope system.
+
+The organization dashboard provides:
+
+- Organization account information.
+- Profile and contact management.
+- Profile image upload.
+- Contribution submission.
+- Contribution history and status tracking.
+- Collection-related information as the collection workflow is completed.
+
+Organizations cannot independently approve beneficiary requests or modify inventory acceptance and distribution records.
+
+### 3. Administrator
+
+Administrators coordinate the platform's operational activities.
+
+Administrative responsibilities include:
+
+- Reviewing submitted contributions.
+- Scheduling resource collections.
+- Recording collected quantities.
+- Inspecting and accepting or rejecting contributions.
+- Managing available inventory.
+- Reviewing beneficiary assistance requests.
+- Approving or rejecting requests.
+- Coordinating allocations and distribution.
+- Maintaining operational and audit records.
+
+Privileged actions must be enforced by server-side authorization and database policies.
 
 ---
 
 ## Core Features
 
-### 1. Resource Discovery
+### 1. Authentication and User Management
 
-A centralized interface for exploring available resources and assistance categories.
+The application uses Supabase Authentication to manage user identity.
 
-Planned capabilities include:
+The authentication foundation supports:
 
-- Browse available resources.
-- View relevant resource information.
-- Explore assistance categories.
-- Identify resources that may align with specific needs.
+- User registration.
+- Login and logout.
+- Session management.
+- User-specific profiles.
+- Role-based dashboard access.
 
-### 2. Assistance Request Management
+New accounts are assigned an application role through the authentication and profile creation workflow.
 
-A structured process for communicating assistance needs and tracking requests.
+Administrative privileges must be assigned through a controlled administrative process, not through unrestricted public registration.
 
-Planned capabilities include:
+### 2. Organization Contribution Management
 
-- Submit assistance requests.
-- Capture information required for review.
-- View request statuses.
-- Track relevant changes throughout the request lifecycle.
+Organizations can submit resources they intend to donate.
 
-### 3. Request Review and Approval
+Each contribution captures:
 
-A review workflow that separates request submission from approval.
+- Resource or item name.
+- Category.
+- Description.
+- Quantity.
+- Unit of measurement.
+- Pickup address.
+- Submission date.
+- Current contribution status.
 
-Planned capabilities include:
+Organizations can view their own contribution history and follow the progress of submitted resources.
 
-- Provide authorized reviewers with request information.
-- Record review decisions.
-- Update request statuses.
-- Maintain records of relevant approval and rejection actions.
+The contribution workflow includes:
+
+`Submitted → Collection Scheduled → Collected → Inspecting → Accepted / Rejected`
+
+Only resources that have been received and accepted by Hands of Hope should enter the available inventory.
+
+### 3. Collection Coordination
+
+Collection coordination connects submitted contributions with the Hands of Hope collection process.
+
+The planned collection record includes:
+
+- Contribution reference.
+- Scheduled collection date and time.
+- Collection address.
+- Contact person.
+- Contact phone number.
+- Collection status.
+- Collection notes.
+- Completion information.
+
+Collection statuses include:
+
+- `scheduled`
+- `in_progress`
+- `completed`
+- `cancelled`
+
+This separates an organization's initial contribution submission from the actual collection and receipt of resources.
 
 ### 4. Resource and Inventory Management
 
-Tools for maintaining resource records and coordinating available assistance.
+The inventory system maintains records of resources accepted by Hands of Hope.
 
-Planned capabilities include:
+Resource information includes:
 
-- Maintain resource information.
-- Track resource availability.
-- Coordinate resources with approved requests.
-- Keep inventory updates consistent with distribution records.
+- Resource name.
+- Description.
+- Category.
+- Image URL.
+- Available quantity.
+- Unit.
+- Active or inactive status.
 
-### 5. Collection and Distribution Tracking
+Supported resource categories include:
 
-A workflow for coordinating approved assistance and recording its outcome.
+- Food.
+- Clothing.
+- Education.
+- Household essentials.
+- Health.
+- Other.
 
-Planned capabilities include:
+Inventory quantities should reflect accepted resources and authorized allocations or distributions, rather than simply the quantities organizations initially submit.
 
-- Coordinate collection of approved resources.
-- Introduce QR-based collection identification.
-- Link collection records to relevant requests.
-- Record distribution outcomes.
-- Prevent unauthorized or repeated use of collection identifiers where applicable.
+### 5. Beneficiary Assistance Requests
 
-**Accountability principle:** A QR scan alone is not proof that assistance has been received. Confirmation must follow an appropriate verification process and reflect the actual distribution outcome.
+Beneficiaries will be able to submit structured assistance requests.
 
-### 6. Role-Based Access Control
+The intended workflow includes:
 
-The platform is designed around distinct user roles and permissions.
+- Browsing available resources.
+- Selecting resources relevant to their needs.
+- Submitting an assistance request.
+- Tracking request progress.
+- Receiving information about approval and collection.
 
-| Role | Responsibilities |
-|---|---|
-| Recipient | Discover resources, submit requests, and view relevant request statuses |
-| Resource provider | Manage assigned resources and participate in authorized assistance workflows |
-| Administrator / Reviewer | Review requests, oversee authorized operations, and maintain accountability records |
+Request statuses include:
 
-Sensitive information and privileged actions should be protected through server-side authorization and database access policies, rather than relying solely on interface restrictions.
+- `pending_review`
+- `approved`
+- `preparing`
+- `ready_for_collection`
+- `completed`
+- `rejected`
+- `expired`
+- `cancelled`
 
-### 7. Rule-Based Assistance Recommendations
+### 6. Request Review and Allocation
 
-An initial recommendation feature is planned to help connect assistance requests with relevant available resources.
+Administrators review submitted assistance requests and make decisions based on available resources and operational requirements.
 
-The first implementation will prioritize transparent, rule-based criteria that can be understood, tested, and refined before considering more advanced recommendation methods.
+The workflow separates:
+
+- Request submission.
+- Request review.
+- Approval or rejection.
+- Resource allocation.
+- Preparation.
+- Collection readiness.
+- Completion.
+
+An approved request must not automatically be treated as completed.
+
+### 7. QR-Based Distribution Verification
+
+QR-based verification is part of the planned distribution workflow.
+
+The intended system will:
+
+- Generate a unique authorization for an approved allocation.
+- Associate the authorization with the relevant distribution record.
+- Validate the authorization at the distribution centre.
+- Confirm the handover through an authorized staff action.
+- Prevent the same authorization from being redeemed more than once.
+- Retain records of completed distribution activities.
+
+A QR scan alone does not confirm that assistance has been received. Successful verification and an explicit handover confirmation are required.
+
+### 8. Organization Profile Management
+
+Organizations can manage their account contact information.
+
+The profile interface includes:
+
+- Contact person's name.
+- Account email.
+- Contact phone.
+- Organization information.
+- Verification status.
+- Organization profile image.
+
+Profile images are stored using Supabase Storage, with supported image formats and upload restrictions.
+
+Registered organization information and verification status are controlled by authorized personnel.
 
 ---
 
-## Development Roadmap
+## Current Implementation Status
 
-Development is organized into phases to establish a reliable foundation before introducing more complex functionality.
+The project is being developed incrementally. The following table distinguishes existing implementation from workflows still being completed.
 
-### Phase 1 — Requirements and Project Foundation
+| Feature | Status |
+|---|---|
+| Landing page and responsive interface | Implemented |
+| Light and dark theme support | Implemented |
+| Authentication foundation | Implemented |
+| Supabase client integration | Implemented |
+| User profile and role foundation | Implemented |
+| Role-protected dashboard layouts | Implemented |
+| Organization dashboard | Implemented |
+| Organization contribution form | Implemented |
+| Organization contribution history | Implemented |
+| Contribution submission API | Implemented |
+| Organization profile page | Implemented |
+| Organization profile image upload | Implemented in code; Storage setup required |
+| Contribution collection scheduling | Database function and data model prepared; interface integration in progress |
+| Collection progress interface | In progress |
+| Resource inventory management | Database foundation implemented; complete workflow in progress |
+| Beneficiary resource discovery | In progress |
+| Beneficiary assistance request workflow | In progress |
+| Administrator contribution management | In progress |
+| Administrator request review | In progress |
+| Allocation management | In progress |
+| QR distribution verification | Planned |
+| Hardware prototype integration | Planned |
+| Advanced recommendations and analytics | Future improvement |
 
-**Focus:** Establish the technical and functional foundation.
-
-- Define the problem, target users, and use cases.
-- Document functional and non-functional requirements.
-- Define the core assistance workflow.
-- Establish the application architecture.
-- Plan the database schema and user roles.
-- Configure the development environment and repository.
-
-**Expected outcome:** A documented project foundation and agreed-upon technical direction.
-
-### Phase 2 — UI/UX Design and Frontend Development
-
-**Focus:** Build the user interface and establish a consistent design system.
-
-- Define the visual identity and design tokens.
-- Develop the responsive landing page.
-- Build reusable interface components.
-- Implement navigation and application layouts.
-- Create the initial workflow presentation.
-- Validate responsive behavior and accessibility.
-
-**Expected outcome:** A consistent, responsive frontend foundation.
-
-### Phase 3 — Authentication and Database Integration
-
-**Focus:** Establish identity, permissions, and persistent data storage.
-
-- Integrate Supabase authentication.
-- Implement user profiles and role handling.
-- Design and create the PostgreSQL schema.
-- Configure Row Level Security (RLS) policies.
-- Protect routes and sensitive server actions.
-- Validate access permissions.
-
-**Expected outcome:** A secure foundation for user-specific functionality.
-
-### Phase 4 — Core Assistance Workflow
-
-**Focus:** Connect the main user-facing workflows to application services.
-
-- Implement resource discovery.
-- Develop assistance request submission.
-- Implement request review and approval.
-- Add request status tracking.
-- Build resource and inventory management.
-- Integrate frontend interfaces with backend services.
-
-**Expected outcome:** An integrated assistance-management workflow.
-
-### Phase 5 — Distribution and Accountability
-
-**Focus:** Make approved assistance traceable through fulfilment.
-
-- Implement collection coordination.
-- Introduce QR-based collection identification.
-- Record collection and distribution outcomes.
-- Maintain consistency between inventory and distribution records.
-- Validate authorization and duplicate-use protections.
-- Test relevant data-integrity requirements.
-
-**Expected outcome:** A traceable workflow for approved assistance and its distribution.
-
-### Phase 6 — Recommendations, Testing, and Validation
-
-**Focus:** Improve reliability and validate core functionality.
-
-- Prototype rule-based resource recommendations.
-- Test core application workflows.
-- Validate authorization and database policies.
-- Test error handling and edge cases.
-- Review responsive behavior and accessibility.
-- Resolve identified defects.
-
-**Expected outcome:** A tested MVP ready for demonstration and further refinement.
-
-### Phase 7 — Deployment and Iteration
-
-**Focus:** Prepare the application for deployment and continued improvement.
-
-- Configure production environment variables.
-- Prepare the production database and access policies.
-- Deploy the application.
-- Verify deployed functionality.
-- Gather feedback from users and stakeholders.
-- Prioritize improvements based on validation results.
-
-**Expected outcome:** A deployed MVP and a documented path for continued development.
-
-> **Roadmap note:** These phases describe the planned development process. Their completion and the availability of individual features depend on actual implementation and testing progress.
+**Implementation note:** The existence of a database table, route, or interface does not necessarily mean its entire business workflow has been completed or tested. Features should only be marked complete after their relevant integration and validation.
 
 ---
 
 ## System Architecture
 
-Hands of Hope follows a web application architecture that separates the user interface, application logic, authentication, authorization, and persistent data.
+Hands of Hope uses a full-stack web application architecture built around Next.js and Supabase.
+
+The frontend, application services, authentication, authorization, and persistent database are organized to separate presentation responsibilities from sensitive business operations.
+
+### High-Level Architecture
 
 ```text
-                         USERS
-                           |
-                           v
-                 Next.js Web Application
-                   React + TypeScript
-                           |
-                           v
-                 Application / API Layer
-                           |
-                 +---------+---------+
-                 |                   |
-                 v                   v
-           Supabase Auth       Authorization
-                               and RLS Policies
-                 |                   |
-                 +---------+---------+
-                           |
-                           v
-                    PostgreSQL
-                           |
-             +-------------+-------------+
-             |             |             |
-             v             v             v
-          Requests      Resources     Distribution
-                         Inventory      Records
+                    USERS
+                      |
+                      v
+              NEXT.JS APPLICATION
+               React + TypeScript
+                      |
+          +-----------+-----------+
+          |                       |
+          v                       v
+    PRESENTATION LAYER      APPLICATION LAYER
+    ------------------      -----------------
+    Landing Page            API Routes
+    Authentication          Server Actions
+    Beneficiary UI          Server Components
+    Organization UI         Validation
+    Admin UI                Business Logic
+          |                       |
+          +-----------+-----------+
+                      |
+                      v
+               SUPABASE SERVICES
+          +-----------+-----------+
+          |                       |
+          v                       v
+    SUPABASE AUTH          SUPABASE STORAGE
+    User Identity          Profile Images
+    Sessions               Uploaded Assets
+          |
+          v
+    AUTHORIZATION
+    Server-Side Checks
+    Row Level Security
+          |
+          v
+       POSTGRESQL
+          |
+    +-----+------+----------------+
+    |            |                |
+    v            v                v
+  PROFILES   CONTRIBUTIONS   ASSISTANCE
+  USERS      COLLECTIONS     REQUESTS
+             RESOURCES
+             INVENTORY
+             DISTRIBUTIONS
+             AUDIT LOGS
 ```
 
-This represents the intended high-level architecture. The final diagram should be updated to reflect the application's actual implementation and configured services.
+### Architecture Responsibilities
+
+**Frontend layer**
+
+Responsible for:
+
+- User interfaces.
+- Navigation.
+- Form handling.
+- Theme management.
+- Responsive layouts.
+- User feedback and interaction.
+
+**Application layer**
+
+Responsible for:
+
+- Authenticated API requests.
+- Server-side validation.
+- Role checks.
+- Contribution processing.
+- Collection coordination.
+- Administrative operations.
+- Secure interaction with Supabase.
+
+**Supabase layer**
+
+Responsible for:
+
+- User authentication.
+- PostgreSQL data storage.
+- Row Level Security.
+- Storage for uploaded profile images.
+
+**Database layer**
+
+Responsible for:
+
+- Persistent application records.
+- Relationships between users and organizations.
+- Contribution and inventory records.
+- Assistance requests.
+- Distribution records.
+- Audit history.
+
+---
+
+## Core Workflows
+
+### Organization Contribution Workflow
+
+```text
+ORGANIZATION
+     |
+     v
+Submit Contribution
+     |
+     v
+Contribution Status: SUBMITTED
+     |
+     v
+ADMIN REVIEW
+     |
+     v
+Schedule Collection
+     |
+     v
+COLLECTION PROCESS
+     |
+     v
+Record Collected Quantity
+     |
+     v
+INSPECTION
+     |
+     +----------------------+
+     |                      |
+     v                      v
+  ACCEPTED               REJECTED
+     |                      |
+     v                      v
+Create Inventory       Record Outcome
+Resource
+     |
+     v
+Available Resources
+```
+
+### Beneficiary Assistance Workflow
+
+```text
+BENEFICIARY
+     |
+     v
+Browse Available Resources
+     |
+     v
+Submit Assistance Request
+     |
+     v
+PENDING REVIEW
+     |
+     v
+ADMIN REVIEW
+     |
+     +----------------------+
+     |                      |
+     v                      v
+  APPROVED               REJECTED
+     |
+     v
+RESOURCE ALLOCATION
+     |
+     v
+PREPARATION
+     |
+     v
+READY FOR COLLECTION
+     |
+     v
+QR AUTHORIZATION
+     |
+     v
+VERIFY AND CONFIRM HANDOVER
+     |
+     v
+COMPLETED
+```
+
+---
+
+## Database Architecture
+
+The application uses PostgreSQL through Supabase.
+
+The database is designed around relational records that connect users, organizations, resources, contributions, requests, and distributions.
+
+### Main Tables
+
+| Table | Purpose |
+|---|---|
+| `profiles` | Application user profiles and role information. |
+| `organizations` | Organization-specific information linked to user profiles. |
+| `resources` | Available resources and inventory quantities. |
+| `contributions` | Resources submitted by organizations. |
+| `contribution_collections` | Collection schedules and collection progress. |
+| `assistance_requests` | Beneficiary assistance requests. |
+| `assistance_request_items` | Individual resources associated with requests. |
+| `distributions` | Records of assistance prepared for distribution. |
+| `distribution_authorizations` | QR authorization and redemption information. |
+| `audit_logs` | Records of relevant operational actions. |
+
+### Important Relationships
+
+```text
+AUTH USERS
+    |
+    | 1:1
+    v
+PROFILES
+    |
+    | 1:0..1
+    v
+ORGANIZATIONS
+    |
+    | 1:M
+    v
+CONTRIBUTIONS
+    |
+    | 1:0..1
+    v
+CONTRIBUTION COLLECTIONS
+
+CONTRIBUTIONS
+    |
+    | accepted contribution
+    v
+RESOURCES
+    |
+    | allocated to requests
+    v
+ASSISTANCE REQUEST ITEMS
+    |
+    v
+ASSISTANCE REQUESTS
+    |
+    v
+DISTRIBUTIONS
+    |
+    v
+DISTRIBUTION AUTHORIZATIONS
+```
+
+The database also uses constraints, foreign keys, and triggers to maintain data relationships and support consistent updates.
+
+### Inventory Principle
+
+Submitted contributions are not automatically available to beneficiaries.
+
+Inventory is created or updated through the authorized acceptance process after collection and inspection.
+
+This ensures that the platform does not advertise resources that have not actually been received and accepted.
+
+---
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| [Next.js](https://nextjs.org/) | Web application framework and routing |
-| [React](https://react.dev/) | Component-based user interface |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety and maintainable code |
-| [Tailwind CSS](https://tailwindcss.com/) | Responsive styling |
-| [shadcn/ui](https://ui.shadcn.com/) | Customizable UI components |
+| [Next.js 16](https://nextjs.org/) | Full-stack React framework and application routing |
+| [React 19](https://react.dev/) | Component-based user interface |
+| [TypeScript](https://www.typescriptlang.org/) | Static typing and maintainable application code |
+| [Tailwind CSS 4](https://tailwindcss.com/) | Responsive styling and design system |
+| [shadcn/ui](https://ui.shadcn.com/) | Reusable and customizable UI components |
 | [Motion for React](https://motion.dev/) | Interface transitions and animations |
-| [Lucide](https://lucide.dev/) | Interface icons |
-| [Supabase](https://supabase.com/) | Authentication and database services |
-| [PostgreSQL](https://www.postgresql.org/) | Relational data storage |
-| [Vercel](https://vercel.com/) | Intended hosting and deployment platform |
-| Git and GitHub | Version control and collaboration |
-
-The table reflects the intended technology stack. It should be kept aligned with the packages and services actually used in the repository.
+| [Lucide React](https://lucide.dev/) | Interface icons |
+| [Supabase](https://supabase.com/) | Authentication, database access, and storage |
+| [PostgreSQL](https://www.postgresql.org/) | Relational database |
+| [Vercel](https://vercel.com/) | Application hosting and deployment |
+| Git and GitHub | Version control and team collaboration |
 
 ---
 
-## Security and Accountability
+## Project Structure
 
-Because Hands of Hope may handle sensitive assistance requests and distribution records, security and data integrity are central engineering considerations.
+The repository follows the Next.js App Router convention.
 
-The implementation should address the following:
+The following structure highlights the main application areas and the organization integration currently being developed.
 
-- **Authentication:** Identify users before granting access to protected functionality.
-- **Authorization:** Restrict privileged actions to appropriately authorized roles.
-- **Row Level Security:** Enforce database-level access rules through Supabase RLS policies.
-- **Input validation:** Validate submitted data at appropriate client and server boundaries.
-- **Data integrity:** Keep related inventory and distribution updates consistent.
-- **Auditability:** Maintain relevant records of request decisions and distribution outcomes.
-- **QR validation:** Validate collection identifiers and prevent unauthorized or repeated use where required.
-- **Secret management:** Keep privileged credentials out of client-side code and version control.
+```text
+hands-of-hope/
+│
+├── app/
+│   │
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── register/
+│   │
+│   ├── (beneficiary)/
+│   │   └── beneficiary/
+│   │       ├── dashboard/
+│   │       ├── profile/
+│   │       └── ...
+│   │
+│   ├── (organization)/
+│   │   └── organization/
+│   │       ├── dashboard/
+│   │       ├── contributions/
+│   │       │   ├── page.tsx
+│   │       │   └── new/
+│   │       │       └── page.tsx
+│   │       ├── collection/
+│   │       ├── profile/
+│   │       │   ├── page.tsx
+│   │       │   └── actions.ts
+│   │       └── layout.tsx
+│   │
+│   ├── admin/
+│   │
+│   ├── api/
+│   │   └── contributions/
+│   │       └── route.ts
+│   │
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── landing/
+│   └── ui/
+│
+├── libs/
+│   ├── auth/
+│   │   └── authorize.ts
+│   │
+│   └── supabase/
+│       ├── client.ts
+│       └── server.ts
+│
+├── public/
+│
+├── supabase/
+│   └── migrations/
+│       └── 202611010001_organization_avatars.sql
+│
+├── .env.local
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
-These are implementation requirements and design goals, not a claim that every control has already been completed or independently audited.
+**Note:** This is a high-level representation of the current application structure, not an exhaustive listing of every repository file. Additional routes, components, and migrations may be introduced as the remaining workflows are implemented.
+
+### Important Directories
+
+- `app/`: Application routes, layouts, pages, and API endpoints.
+- `components/`: Reusable UI and application components.
+- `libs/auth/`: Authentication and role authorization helpers.
+- `libs/supabase/`: Browser and server Supabase clients.
+- `supabase/`: Database-related SQL and migrations.
+- `public/`: Static assets.
+
+---
+
+## Security and Data Integrity
+
+Security is a core requirement because the platform handles user profiles, assistance requests, organization information, and distribution records.
+
+The application uses several layers of protection.
+
+### Authentication
+
+Supabase Authentication identifies signed-in users and manages their sessions.
+
+### Role-Based Authorization
+
+Protected routes and server operations verify the authenticated user's application role.
+
+The supported application roles are:
+
+- `beneficiary`
+- `organization`
+- `admin`
+
+### Row Level Security
+
+Supabase RLS policies restrict access to records according to the user's identity and permissions.
+
+Examples include:
+
+- Beneficiaries accessing their own assistance requests.
+- Organizations accessing their own contribution records.
+- Administrators accessing authorized operational records.
+
+### Server-Side Validation
+
+Sensitive operations must be validated on the server.
+
+The client must never be trusted to decide:
+
+- Its own role.
+- Which organization it represents.
+- Whether a contribution has been accepted.
+- Whether a request has been approved.
+- Whether a distribution is complete.
+
+### Secure Inventory Updates
+
+Inventory changes must follow authorized acceptance, allocation, and distribution operations.
+
+### QR Authorization
+
+Distribution authorizations must be validated server-side and redeemed atomically to prevent duplicate handovers.
+
+### Secret Management
+
+The Supabase service-role key and other privileged credentials must never be exposed in client-side code or committed to GitHub.
+
+### Auditability
+
+Important administrative actions should be recorded to support accountability and operational investigation.
+
+---
 
 ## Getting Started
 
+Follow these steps to run the project locally.
+
 ### Prerequisites
 
-Before running the project, ensure you have:
+Ensure you have:
 
-- [Node.js](https://nodejs.org/) compatible with the project's Next.js version.
+- [Node.js](https://nodejs.org/) compatible with the installed Next.js version.
 - npm.
 - [Git](https://git-scm.com/).
-- A Supabase project for features that depend on Supabase.
+- A Supabase project.
 
 ### 1. Clone the repository
 
-Replace `<https://github.com/spectredev25-star/hands-of-hope.git>` with the actual repository URL.
-
 ```bash
-git clone <https://github.com/spectredev25-star/hands-of-hope.git>
+git clone https://github.com/spectredev25-star/hands-of-hope.git
+
 cd hands-of-hope
 ```
 
@@ -367,16 +792,19 @@ npm install
 
 ### 3. Configure environment variables
 
-Create a `.env.local` file in the project root.
+Create a `.env.local` file in the root directory.
 
-For a standard Supabase client setup, the configuration may include:
+Add the Supabase project configuration:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-publishable-key
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 ```
 
-Use the exact variable names expected by your project's Supabase client configuration. Never commit real credentials or service-role secrets.
+Use the exact variable names expected by the application's Supabase client configuration.
+
+Do not commit `.env.local` to GitHub.
 
 ### 4. Start the development server
 
@@ -384,82 +812,201 @@ Use the exact variable names expected by your project's Supabase client configur
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open:
 
-### Available scripts
-
-Check `package.json` to confirm which scripts are configured in the repository.
-
-A typical Next.js project may include:
-
-```bash
-npm run dev
-npm run build
-npm run start
-npm run lint
+```text
+http://localhost:3000
 ```
-
-Database migrations, seed data, and Supabase policies should also be configured before testing database-dependent workflows.
 
 ---
 
-## Project Structure
+## Environment Variables
 
-The following is an illustrative structure. Update it to match the actual repository as implementation develops.
+| Variable | Purpose | Exposure |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Public |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable key | Public |
+
+If a service-role key is required for a privileged server-side operation in the future, it must use a separate server-only environment variable without the `NEXT_PUBLIC_` prefix.
+
+It must never be imported into browser components.
+
+---
+
+## Database Setup
+
+Hands of Hope uses Supabase PostgreSQL.
+
+Before testing database-dependent features:
+
+1. Create a Supabase project.
+2. Configure the environment variables.
+3. Run the project's initial database schema SQL in the Supabase SQL Editor.
+4. Apply the additional database migrations required by the implemented features.
+5. Verify that RLS is enabled and the required policies are active.
+6. Configure the Supabase Storage bucket when testing profile image uploads.
+
+### Organization Profile Images
+
+Organization profile images use the `avatars` Supabase Storage bucket.
+
+The migration:
 
 ```text
-hands-of-hope/
-├── app/
-│   ├── (auth)/
-│   ├── (storefront)/
-│   ├── admin/
-│   ├── customer/
-│   ├── api/
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── landing/
-│   ├── ui/
-│   └── shared/
-├── lib/
-│   ├── supabase/
-│   ├── auth/
-│   └── validations/
-├── public/
-├── supabase/
-│   └── migrations/
-├── .env.example
-├── .gitignore
-├── package.json
-└── README.md
+supabase/migrations/202611010001_organization_avatars.sql
 ```
+
+creates the bucket and configures upload policies.
+
+Run this migration in the Supabase SQL Editor before testing organization avatar uploads.
+
+### Database Integrity
+
+When applying new SQL changes, use the migration files and keep the database schema aligned with the application code.
+
+Do not assume that creating a frontend page automatically creates its required database tables, columns, policies, or storage configuration.
+
+---
+
+## Development Commands
+
+The following commands are available in `package.json`:
+
+### Start development server
+
+```bash
+npm run dev
+```
+
+### Build the application
+
+```bash
+npm run build
+```
+
+### Start production server
+
+```bash
+npm run start
+```
+
+### Run ESLint
+
+```bash
+npm run lint
+```
+
+Always run a production build after significant changes to routes, authentication, database integration, or application configuration.
+
+---
+
+## Development Roadmap
+
+Development is organized into phases, allowing the team to establish a reliable foundation before expanding functionality.
+
+### Phase 1 — Project Foundation
+
+- Define the problem and target users.
+- Document the core assistance workflow.
+- Establish the application architecture.
+- Define user roles and permissions.
+- Design the initial PostgreSQL schema.
+- Configure the repository and development environment.
+
+### Phase 2 — UI/UX and Frontend Foundation
+
+- Establish the visual identity and design system.
+- Develop the responsive landing page.
+- Implement authentication interfaces.
+- Build reusable components.
+- Develop role-specific dashboard layouts.
+- Implement theme switching and responsive navigation.
+
+### Phase 3 — Authentication and Database Integration
+
+- Integrate Supabase Authentication.
+- Implement user profiles.
+- Implement role-based route protection.
+- Configure PostgreSQL tables and relationships.
+- Configure RLS policies.
+- Connect frontend forms to backend services.
+
+### Phase 4 — Organization Contributions and Resource Management
+
+- Implement contribution submission.
+- Connect contribution history to Supabase.
+- Implement contribution review.
+- Coordinate collection schedules.
+- Record collection outcomes.
+- Inspect and accept or reject resources.
+- Update inventory from accepted contributions.
+
+### Phase 5 — Beneficiary Assistance Management
+
+- Implement resource discovery.
+- Implement assistance request submission.
+- Develop request history and status tracking.
+- Implement administrative request review.
+- Introduce resource allocation.
+- Connect approved requests to inventory.
+
+### Phase 6 — Distribution and Accountability
+
+- Implement allocation preparation.
+- Introduce QR authorization generation.
+- Implement QR verification.
+- Confirm distribution handovers.
+- Prevent duplicate authorization redemption.
+- Maintain distribution and audit records.
+
+### Phase 7 — Testing and Deployment
+
+- Test authentication and authorization.
+- Validate RLS policies.
+- Test the complete contribution workflow.
+- Test assistance request and distribution workflows.
+- Validate data integrity and error handling.
+- Improve responsive behavior and accessibility.
+- Deploy and verify the production application.
+
+---
 
 ## Future Improvements
 
-Potential improvements beyond the core MVP include:
+After the core MVP is stable, potential improvements include:
 
-- More advanced resource-matching and recommendation capabilities.
+- Hardware prototype integration for recording or supporting physical distribution activities.
+- Rule-based resource recommendations.
+- More advanced assistance matching.
+- Notifications for contribution and request status changes.
 - Analytics for resource availability and distribution outcomes.
-- Notifications for important request-status changes.
-- Integration with external logistics and delivery providers.
-- Additional reporting tools for administrators and resource providers.
-- Further improvements guided by user feedback and testing.
+- Improved administrative reporting.
+- Integration with external logistics providers.
+- Employment and job-connection opportunities for beneficiaries.
 
-These improvements will be prioritized according to user needs, technical feasibility, and the reliability of the core workflow.
+These features will be prioritized according to user needs, technical feasibility, and feedback from the core MVP.
+
+---
 
 ## Contributing
 
-Hands of Hope is being developed collaboratively by **Transformative Creatives**.
+Hands of Hope is developed collaboratively by **Transformative Creatives**.
 
 Contributors should:
 
-1. Create a feature branch using the team's agreed branching convention.
-2. Keep changes focused and consistent with the existing architecture.
-3. Test affected functionality before submitting changes.
-4. Document configuration and environment-variable changes.
-5. Describe the implementation and any known limitations in the pull request.
+1. Pull the latest changes from the main branch.
+2. Create a feature branch for new work.
+3. Follow the existing project structure and design system.
+4. Reuse existing components where appropriate.
+5. Validate data on the server.
+6. Respect existing authentication and RLS policies.
+7. Test affected functionality before submitting changes.
+8. Document new environment variables, SQL migrations, and configuration requirements.
+9. Submit focused pull requests with clear descriptions.
 
-Changes involving authorization, database policies, inventory, or distribution records require particular care.
+Changes involving authentication, authorization, inventory, contributions, and distribution require particular care.
+
+---
 
 ## Team
 
@@ -467,16 +1014,22 @@ Changes involving authorization, database policies, inventory, or distribution r
 
 Building technology to make community assistance more accessible, coordinated, and accountable.
 
+---
+
 ## License
 
-A license has not yet been specified. Until a license is added to the repository, reuse and redistribution permissions are not explicitly granted.
+A license has not yet been specified.
+
+Until a license is added to this repository, reuse and redistribution permissions are not explicitly granted.
 
 ---
 
 <div align="center">
 
-**Hands of Hope**
+### Hands of Hope
 
 *Connecting needs, resources, and people through accountable technology.*
+
+**Built with purpose by Transformative Creatives.**
 
 </div>
