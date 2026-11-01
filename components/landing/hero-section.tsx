@@ -27,7 +27,8 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative isolate flex min-h-[760px] min-h-svh items-center overflow-hidden bg-[#071B1A]">
+    <section id="home"
+      className="relative isolate flex min-h-[760px] min-h-svh items-center overflow-hidden bg-[#071B1A]">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-20 bg-cover bg-center"
@@ -93,7 +94,7 @@ export function HeroSection() {
               asChild
               className="group h-12 rounded-full bg-teal-400 px-7 font-semibold text-[#062e2b] shadow-lg shadow-teal-950/20 transition-all hover:-translate-y-0.5 hover:bg-teal-300"
             >
-              <Link href="/resources">
+              <Link href="/signup">
                 Find Assistance
                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -105,7 +106,7 @@ export function HeroSection() {
               asChild
               className="h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:border-white/50 hover:bg-white/10 hover:text-white"
             >
-              <Link href="/register?role=organisation">
+              <Link href="/signup">
                 Become a Partner
               </Link>
             </Button>
