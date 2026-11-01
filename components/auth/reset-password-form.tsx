@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import {
@@ -13,7 +13,7 @@ import {
   Loader2,
 } from "lucide-react";
 
-import { supabase } from "@/libs/supabase/client";
+import { createClient } from "@/libs/supabase/client";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
@@ -43,8 +43,12 @@ export default function ResetPasswordForm() {
     setLoading(true);
 
     try {
-      const { data: { session }, error: sessionError } =
-        await supabase.auth.getSession();
+      const supabase = createClient();
+
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
 
       if (sessionError) throw sessionError;
 
@@ -54,11 +58,11 @@ export default function ResetPasswordForm() {
         );
       }
 
-      const { error } = await supabase.auth.updateUser({
+      const { error: updateError } = await supabase.auth.updateUser({
         password,
       });
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
       setUpdated(true);
     } catch (err) {
@@ -112,11 +116,13 @@ export default function ResetPasswordForm() {
               >
                 New password
               </label>
+
               <div className="relative">
                 <LockKeyhole
                   size={18}
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
                 />
+
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -128,6 +134,7 @@ export default function ResetPasswordForm() {
                   placeholder="At least 8 characters"
                   className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
                 />
+
                 <button
                   type="button"
                   onClick={() => setShowPassword((value) => !value)}
@@ -146,11 +153,13 @@ export default function ResetPasswordForm() {
               >
                 Confirm new password
               </label>
+
               <div className="relative">
                 <LockKeyhole
                   size={18}
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
                 />
+
                 <input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
@@ -163,6 +172,7 @@ export default function ResetPasswordForm() {
                   placeholder="Enter your new password again"
                   className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
                 />
+
                 <button
                   type="button"
                   onClick={() =>

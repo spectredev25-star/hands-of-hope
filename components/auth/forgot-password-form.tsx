@@ -1,11 +1,17 @@
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowLeft, Mail, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  Mail,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 
-import { supabase } from "@/libs/supabase/client";
+import { createClient } from "@/libs/supabase/client";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -16,21 +22,24 @@ export default function ForgotPasswordForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+
+    if (!email.trim()) {
+      setError("Please enter your email address.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      if (!email.trim()) {
-        throw new Error("Please enter your email address.");
-      }
+      // Initialize Supabase only when the user submits the form.
+      const supabase = createClient();
 
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        email.trim(),
-        {
+      const { error: resetError } =
+        await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
-        }
-      );
+        });
 
-      if (error) throw error;
+      if (resetError) throw resetError;
 
       setSent(true);
     } catch (err) {
@@ -93,11 +102,13 @@ export default function ForgotPasswordForm() {
               >
                 Email address
               </label>
+
               <div className="relative">
                 <Mail
                   size={18}
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
                 />
+
                 <input
                   id="email"
                   type="email"
