@@ -143,10 +143,6 @@ export default async function OrganizationProfilePage({ searchParams }: ProfileP
             </label>
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-[#DCE7E2] pt-5 dark:border-[#244540]">
-            <SaveProfileButton />
-            <p className="text-xs text-[#64748B] dark:text-[#9AafAA]">Save your contact details and profile image.</p>
-          </div>
         </section>
 
         <section className="rounded-2xl border border-[#DCE7E2] bg-white p-6 dark:border-[#244540] dark:bg-[#0D2927] sm:p-8">
