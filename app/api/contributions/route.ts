@@ -81,7 +81,7 @@ export async function POST(request: Request) {
 
   const { data: organization, error: organizationError } = await supabase
     .from("organizations")
-    .select("id, verification_status")
+    .select("id")
     .eq("profile_id", user.id)
     .maybeSingle();
 
@@ -89,12 +89,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Your organization profile could not be found." }, { status: 404 });
   }
 
-  if (organization.verification_status !== "verified") {
-    return NextResponse.json(
-      { error: "Your organization must be verified before submitting contributions." },
-      { status: 403 },
-    );
-  }
 
   let body: Record<string, unknown>;
 
