@@ -119,7 +119,7 @@ export function Navbar() {
                 asChild
                 className="rounded-full bg-teal-500 text-slate-950 hover:bg-teal-400"
               >
-                <Link href="/register">Get Started</Link>
+                <Link href="/signup">Get Started</Link>
               </Button>
             </div>
           </div>
