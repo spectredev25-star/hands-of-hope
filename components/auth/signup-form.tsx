@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -16,7 +17,7 @@ import {
   Loader2,
 } from "lucide-react";
 
-import { supabase } from "@/libs/supabase/client";
+import { createClient } from "@/libs/supabase/client";
 import RoleSelector, { type UserRole } from "./role-selector";
 
 export default function SignupForm() {
@@ -36,7 +37,14 @@ export default function SignupForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  async function handleSignup(event: React.FormEvent<HTMLFormElement>) {
+  const dashboardRoutes: Record<UserRole, string> = {
+    beneficiary: "/beneficiary/dashboard",
+    organization: "/organization/dashboard",
+  };
+
+  async function handleSignup(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
     setError("");
     setSuccess("");
@@ -74,24 +82,31 @@ export default function SignupForm() {
     setLoading(true);
 
     try {
-      const { data, error: signupError } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/login`,
-          data: {
-            full_name: fullName.trim(),
-            signup_role: role,
-            organization_name:
-              role === "organization" ? organizationName.trim() : null,
-          },
-        },
-      });
+      const supabase = createClient();
 
-      if (signupError) throw signupError;
+      const { data, error: signupError } =
+        await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/login`,
+            data: {
+              full_name: fullName.trim(),
+              signup_role: role,
+              organization_name:
+                role === "organization"
+                  ? organizationName.trim()
+                  : null,
+            },
+          },
+        });
+
+      if (signupError) {
+        throw signupError;
+      }
 
       if (data.session) {
-        window.location.href = "/auth/beneficiary/dashboard";
+        window.location.assign(dashboardRoutes[role]);
         return;
       }
 
@@ -99,6 +114,8 @@ export default function SignupForm() {
         "Your account has been created. Please check your email to verify your address before signing in."
       );
     } catch (err) {
+      console.error("Signup error:", err);
+
       setError(
         err instanceof Error
           ? err.message
@@ -118,31 +135,49 @@ export default function SignupForm() {
       return;
     }
 
+    if (role === "organization" && !organizationName.trim()) {
+      setError("Please enter your organization name.");
+      return;
+    }
+
     setGoogleLoading(true);
 
     try {
-      // The selected role is only a signup preference.
-      // The server must validate the role during profile onboarding.
+      const supabase = createClient();
+
       sessionStorage.setItem("pending_signup_role", role);
+
       sessionStorage.setItem(
         "pending_organization_name",
-        role === "organization" ? organizationName.trim() : ""
+        role === "organization"
+          ? organizationName.trim()
+          : ""
       );
 
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/auth/complete-profile`,
-        },
-      });
+      const { error: oauthError } =
+        await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: `${
+              window.location.origin
+            }/auth/callback?next=${encodeURIComponent(
+              dashboardRoutes[role]
+            )}`,
+          },
+        });
 
-      if (error) throw error;
+      if (oauthError) {
+        throw oauthError;
+      }
     } catch (err) {
+      console.error("Google signup error:", err);
+
       setError(
         err instanceof Error
           ? err.message
           : "Unable to continue with Google. Please try again."
       );
+
       setGoogleLoading(false);
     }
   }
@@ -173,6 +208,7 @@ export default function SignupForm() {
           <label className="mb-3 block text-sm font-semibold text-slate-700">
             I want to join as a
           </label>
+
           <RoleSelector value={role} onChange={setRole} />
         </div>
 
@@ -183,11 +219,13 @@ export default function SignupForm() {
           >
             Full name
           </label>
+
           <div className="relative">
             <UserRound
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="fullName"
               name="fullName"
@@ -214,11 +252,13 @@ export default function SignupForm() {
             >
               Organization name
             </label>
+
             <div className="relative">
               <Building2
                 size={18}
                 className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
               />
+
               <input
                 id="organizationName"
                 name="organizationName"
@@ -243,11 +283,13 @@ export default function SignupForm() {
           >
             Email address
           </label>
+
           <div className="relative">
             <Mail
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="email"
               name="email"
@@ -270,6 +312,7 @@ export default function SignupForm() {
             >
               Password
             </label>
+
             <span className="text-xs text-slate-400">
               At least 8 characters
             </span>
@@ -280,6 +323,7 @@ export default function SignupForm() {
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="password"
               name="password"
@@ -292,13 +336,22 @@ export default function SignupForm() {
               placeholder="Create a strong password"
               className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
+
             <button
               type="button"
-              onClick={() => setShowPassword((current) => !current)}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() =>
+                setShowPassword((current) => !current)
+              }
+              aria-label={
+                showPassword ? "Hide password" : "Show password"
+              }
               className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? (
+                <EyeOff size={18} />
+              ) : (
+                <Eye size={18} />
+              )}
             </button>
           </div>
         </div>
@@ -310,11 +363,13 @@ export default function SignupForm() {
           >
             Confirm password
           </label>
+
           <div className="relative">
             <LockKeyhole
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="confirmPassword"
               name="confirmPassword"
@@ -328,6 +383,7 @@ export default function SignupForm() {
               placeholder="Enter your password again"
               className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
+
             <button
               type="button"
               onClick={() =>
@@ -354,19 +410,28 @@ export default function SignupForm() {
             id="terms"
             type="checkbox"
             checked={acceptedTerms}
-            onChange={(event) => setAcceptedTerms(event.target.checked)}
+            onChange={(event) =>
+              setAcceptedTerms(event.target.checked)
+            }
             className="mt-1 size-4 shrink-0 accent-[#0F766E]"
           />
+
           <label
             htmlFor="terms"
             className="text-sm leading-6 text-slate-500"
           >
             I agree to the{" "}
-            <Link href="/terms" className="font-medium text-[#0F766E] hover:underline">
+            <Link
+              href="/terms"
+              className="font-medium text-[#0F766E] hover:underline"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="font-medium text-[#0F766E] hover:underline">
+            <Link
+              href="/privacy"
+              className="font-medium text-[#0F766E] hover:underline"
+            >
               Privacy Policy
             </Link>
             .
@@ -414,9 +479,11 @@ export default function SignupForm() {
 
       <div className="my-6 flex items-center gap-4">
         <div className="h-px flex-1 bg-slate-200" />
+
         <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
           or continue with
         </span>
+
         <div className="h-px flex-1 bg-slate-200" />
       </div>
 
@@ -429,9 +496,12 @@ export default function SignupForm() {
         {googleLoading ? (
           <Loader2 size={18} className="animate-spin" />
         ) : (
-          <span className="font-bold text-lg">G</span>
+          <span className="text-lg font-bold">G</span>
         )}
-        {googleLoading ? "Connecting to Google..." : "Continue with Google"}
+
+        {googleLoading
+          ? "Connecting to Google..."
+          : "Continue with Google"}
       </button>
 
       <p className="mt-7 text-center text-sm text-slate-500">

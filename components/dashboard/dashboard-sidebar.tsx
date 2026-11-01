@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -5,88 +6,75 @@ import { usePathname } from "next/navigation";
 import {
   HeartHandshake,
   ArrowUpRight,
-  LayoutDashboard,
-  Package,
-  ClipboardList,
-  UserRound,
-  type LucideIcon,
 } from "lucide-react";
 
-import { beneficiaryNavigation } from "@/libs/dashboard/navigation";
+import {
+  beneficiaryNavigation,
+  organizationNavigation,
+  adminNavigation,
+  type DashboardNavItem,
+} from "@/libs/dashboard/navigation";
+
 import { DashboardNavItemLink } from "./dashboard-nav-item";
 
-type SidebarNavItem = {
-  label: string;
-  href: string;
-  icon: LucideIcon;
-  description?: string;
+type DashboardSidebarProps = {
+  mobile?: boolean;
+  onNavigate?: () => void;
 };
-
-const organizationNavigation: SidebarNavItem[] = [
-  {
-    label: "Overview",
-    href: "/organization/dashboard",
-    icon: LayoutDashboard,
-    description: "Organization overview",
-  },
-  {
-    label: "My contributions",
-    href: "/organization/contributions",
-    icon: Package,
-    description: "Track submitted contributions",
-  },
-  {
-    label: "New contribution",
-    href: "/organization/contributions/new",
-    icon: ClipboardList,
-    description: "Propose resources",
-  },
-  {
-    label: "Profile",
-    href: "/organization/profile",
-    icon: UserRound,
-    description: "Manage organization details",
-  },
-];
 
 export function DashboardSidebar({
   mobile = false,
   onNavigate,
-}: {
-  mobile?: boolean;
-  onNavigate?: () => void;
-}) {
+}: DashboardSidebarProps) {
   const pathname = usePathname();
 
+  // Identify the current dashboard role.
+  const isAdmin = pathname.startsWith("/admin");
   const isOrganization = pathname.startsWith("/organization");
 
-  const navigation: SidebarNavItem[] = isOrganization
-    ? organizationNavigation
-    : beneficiaryNavigation;
+  // Select navigation based on the current role.
+  const navigation: DashboardNavItem[] = isAdmin
+    ? adminNavigation
+    : isOrganization
+      ? organizationNavigation
+      : beneficiaryNavigation;
 
-  const sectionTitle = isOrganization
-    ? "Organization"
-    : "Your space";
+  // Role-specific sidebar content.
+  const sectionTitle = isAdmin
+    ? "Administration"
+    : isOrganization
+      ? "Organization"
+      : "Your space";
 
-  const workspaceDescription = isOrganization
-    ? "Partner workspace"
-    : "Your support space";
+  const workspaceDescription = isAdmin
+    ? "Management workspace"
+    : isOrganization
+      ? "Partner workspace"
+      : "Your support space";
 
-  const footerTitle = isOrganization
-    ? "Together, we can help."
-    : "Small steps matter.";
+  const footerTitle = isAdmin
+    ? "Every action creates impact."
+    : isOrganization
+      ? "Together, we can help."
+      : "Small steps matter.";
 
-  const footerDescription = isOrganization
-    ? "Your contributions help bring essential resources to people."
-    : "We're here to help you find the support you need.";
+  const footerDescription = isAdmin
+    ? "Your work helps ensure resources reach the people who need them."
+    : isOrganization
+      ? "Your contributions help bring essential resources to people."
+      : "We're here to help you find the support you need.";
 
-  const footerLink = isOrganization
-    ? "/organization/contributions"
-    : "/beneficiary/resources";
+  const footerLink = isAdmin
+    ? "/admin/requests"
+    : isOrganization
+      ? "/organization/contributions"
+      : "/beneficiary/resources";
 
-  const footerLinkText = isOrganization
-    ? "View contributions"
-    : "Explore resources";
+  const footerLinkText = isAdmin
+    ? "Review requests"
+    : isOrganization
+      ? "View contributions"
+      : "Explore resources";
 
   return (
     <aside

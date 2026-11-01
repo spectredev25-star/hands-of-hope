@@ -1,14 +1,16 @@
+
+import { connection } from "next/server";
 import Link from "next/link";
 import { ArrowRight, History, PackageCheck } from "lucide-react";
 
 import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-header";
 import { SectionEmptyState } from "@/components/dashboard/section-empty-state";
-import { mockRequests } from "@/libs/beneficiary/mock-data";
+import { getMyCompletedDistributions } from "@/libs/beneficiary/server";
 
-export default function HistoryPage() {
-  const completedRequests = mockRequests.filter(
-    (request) => request.status === "completed"
-  );
+export default async function HistoryPage() {
+  await connection();
+
+  const distributions = await getMyCompletedDistributions();
 
   return (
     <div className="space-y-7">
@@ -18,7 +20,7 @@ export default function HistoryPage() {
         description="Review assistance that has been fulfilled and recorded."
       />
 
-      {completedRequests.length === 0 ? (
+      {distributions.length === 0 ? (
         <SectionEmptyState
           icon={History}
           title="Your story is still unfolding."
@@ -28,9 +30,9 @@ export default function HistoryPage() {
         />
       ) : (
         <div className="space-y-4">
-          {completedRequests.map((request) => (
+          {distributions.map((distribution) => (
             <article
-              key={request.id}
+              key={distribution.id}
               className="rounded-2xl border border-[#DCE7E2] bg-white p-5 dark:border-[#244540] dark:bg-[#0D2927]"
             >
               <div className="flex flex-wrap items-center justify-between gap-4">
@@ -41,24 +43,37 @@ export default function HistoryPage() {
 
                   <div>
                     <h2 className="text-sm font-semibold text-[#172524] dark:text-[#F1F5F4]">
-                      {request.resourceName}
+                      {distribution.resourceName}
                     </h2>
 
                     <p className="mt-1 text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
-                      Reference: {request.id}
+                      Distribution reference:{" "}
+                      {distribution.id.slice(0, 8).toUpperCase()}
                     </p>
 
                     <p className="mt-2 text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
-                      Recorded status: Completed
+                      Completed on{" "}
+                      {new Date(distribution.completedAt).toLocaleDateString(
+                        "en-NG",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )}
+                    </p>
+
+                    <p className="mt-1 text-xs font-medium text-[#0F766E] dark:text-[#99F6E4]">
+                      Distribution completed
                     </p>
                   </div>
                 </div>
 
                 <Link
-                  href={`/beneficiary/requests/${encodeURIComponent(request.id)}`}
+                  href={`/beneficiary/requests/${encodeURIComponent(distribution.requestId)}`}
                   className="inline-flex items-center gap-2 text-sm font-medium text-[#0F766E] dark:text-[#99F6E4]"
                 >
-                  View details
+                  View request
                   <ArrowRight size={16} />
                 </Link>
               </div>
@@ -66,12 +81,6 @@ export default function HistoryPage() {
           ))}
         </div>
       )}
-
-      <p className="text-xs leading-5 text-[#64748B] dark:text-[#F1F5F4]/40">
-        In production, distribution history should be sourced from
-        recorded fulfillment events, including partial distributions
-        where applicable—not inferred from a frontend status alone.
-      </p>
     </div>
   );
 }

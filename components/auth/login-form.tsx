@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -13,7 +14,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import { supabase } from "@/libs/supabase/client";
+import { createClient } from "@/libs/supabase/client";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,32 +23,104 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
+      const supabase = createClient();
 
-      if (error) throw error;
+      // STEP 1: Authenticate the user.
+      const { data, error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+
+      if (loginError) {
+        console.error("SUPABASE LOGIN ERROR:", {
+          code: loginError.code,
+          message: loginError.message,
+          status: loginError.status,
+        });
+
+        throw loginError;
+      }
 
       if (!data.user) {
         throw new Error("We couldn't retrieve your account.");
       }
 
-      // This route must look up the authoritative role on the server.
-      window.location.href = "/beneficiary/dashboard";
+      console.log("AUTHENTICATION SUCCESSFUL:", {
+        userId: data.user.id,
+        email: data.user.email,
+        hasSession: !!data.session,
+      });
+
+      // STEP 2: Retrieve the user's application role.
+      const {
+        data: profile,
+        error: profileError,
+      } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .maybeSingle();
+
+      // STEP 3: Log the exact Supabase database error.
+      if (profileError) {
+        console.error("SUPABASE PROFILE ERROR:", {
+          code: profileError.code,
+          message: profileError.message,
+          details: profileError.details,
+          hint: profileError.hint,
+        });
+
+        throw new Error(
+          `Profile lookup failed: ${profileError.message} (Code: ${profileError.code})`
+        );
+      }
+
+      console.log("SUPABASE PROFILE RESULT:", profile);
+
+      if (!profile) {
+        throw new Error(
+          "Your account profile has not been created. Please contact support."
+        );
+      }
+
+      // STEP 4: Redirect according to the database role.
+      const dashboardRoutes: Record<string, string> = {
+        beneficiary: "/beneficiary/dashboard",
+        organization: "/organization/dashboard",
+        admin: "/admin/dashboard",
+      };
+
+      const destination = dashboardRoutes[profile.role];
+
+      if (!destination) {
+        console.error("INVALID PROFILE ROLE:", profile.role);
+
+        throw new Error(
+          "Your account does not have a valid assigned role."
+        );
+      }
+
+      // Full navigation allows the server to read the refreshed session.
+      window.location.assign(destination);
+
     } catch (err) {
+      console.error("LOGIN FLOW ERROR:", err);
+
       setError(
         err instanceof Error
           ? err.message
           : "Unable to sign in. Please try again."
       );
-    } finally {
+
       setLoading(false);
     }
   }
@@ -85,11 +158,13 @@ export default function LoginForm() {
           >
             Email address
           </label>
+
           <div className="relative">
             <Mail
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="email"
               type="email"
@@ -125,6 +200,7 @@ export default function LoginForm() {
               size={18}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             />
+
             <input
               id="password"
               type={showPassword ? "text" : "password"}
@@ -138,11 +214,19 @@ export default function LoginForm() {
 
             <button
               type="button"
-              onClick={() => setShowPassword((current) => !current)}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() =>
+                setShowPassword((current) => !current)
+              }
+              aria-label={
+                showPassword ? "Hide password" : "Show password"
+              }
               className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? (
+                <EyeOff size={18} />
+              ) : (
+                <Eye size={18} />
+              )}
             </button>
           </div>
         </div>
@@ -153,7 +237,7 @@ export default function LoginForm() {
             className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
           >
             <AlertCircle size={18} className="mt-0.5 shrink-0" />
-            {error}
+            <span>{error}</span>
           </div>
         )}
 

@@ -1,5 +1,7 @@
+
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Clock3 } from "lucide-react";
@@ -8,14 +10,64 @@ import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-heade
 import { RequestStatusBadge } from "@/components/dashboard/request-status-badge";
 import { AssistanceJourney } from "@/components/beneficiary/assistance-journey";
 import { SectionEmptyState } from "@/components/dashboard/section-empty-state";
-import { mockRequests } from "@/libs/beneficiary/mock-data";
+
+import { getMyRequest } from "@/libs/beneficiary/data";
+import type { AssistanceRequest } from "@/libs/beneficiary/types";
 
 export default function RequestDetailsPage() {
   const params = useParams<{ id: string }>();
 
-  const request = mockRequests.find(
-    (item) => item.id === params.id
-  );
+  const [request, setRequest] = useState<AssistanceRequest | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadRequest() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const result = await getMyRequest(params.id);
+
+        if (active) setRequest(result);
+      } catch (err) {
+        if (active) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Unable to load this request."
+          );
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    if (params.id) loadRequest();
+
+    return () => {
+      active = false;
+    };
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="h-8 w-48 animate-pulse rounded-lg bg-[#DCE7E2] dark:bg-[#244540]" />
+        <div className="h-48 animate-pulse rounded-2xl bg-[#DCE7E2] dark:bg-[#0D2927]" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-2xl border border-red-300 bg-red-50 p-5 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+        {error}
+      </div>
+    );
+  }
 
   if (!request) {
     return (
@@ -23,13 +75,13 @@ export default function RequestDetailsPage() {
         <DashboardPageHeader
           eyebrow="REQUEST DETAILS"
           title="Request not found."
-          description="This reference isn't present in the current demo data."
+          description="This request may not exist or may not belong to your account."
         />
 
         <SectionEmptyState
           icon={Clock3}
           title="We couldn't find that request."
-          description="Return to your requests to view the available demonstration records."
+          description="Return to your requests to view your submitted assistance requests."
           actionLabel="View my requests"
           actionHref="/beneficiary/requests"
         />
@@ -48,7 +100,7 @@ export default function RequestDetailsPage() {
       </Link>
 
       <DashboardPageHeader
-        eyebrow={`REQUEST ${request.id}`}
+        eyebrow={`REQUEST ${request.id.slice(0, 8).toUpperCase()}`}
         title={request.resourceName}
         description="Review your request status and the next steps in the assistance process."
         action={<RequestStatusBadge status={request.status} />}
@@ -70,9 +122,8 @@ export default function RequestDetailsPage() {
             <dt className="text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
               Submitted
             </dt>
-
             <dd className="mt-1 text-sm text-[#172524] dark:text-[#F1F5F4]">
-              {request.submittedAt}
+              {new Date(request.submittedAt).toLocaleString()}
             </dd>
           </div>
 
@@ -80,18 +131,33 @@ export default function RequestDetailsPage() {
             <dt className="text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
               Last updated
             </dt>
-
             <dd className="mt-1 text-sm text-[#172524] dark:text-[#F1F5F4]">
-              {request.updatedAt}
+              {new Date(request.updatedAt).toLocaleString()}
             </dd>
           </div>
-        </dl>
 
-        <p className="mt-6 border-t border-[#DCE7E2] pt-4 text-xs leading-5 text-[#64748B] dark:border-[#244540] dark:text-[#F1F5F4]/45">
-          The status and dates shown here are mock data. In production,
-          the backend will determine the authoritative status and which
-          actions are available to you.
-        </p>
+          {request.description && (
+            <div className="sm:col-span-2">
+              <dt className="text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
+                Description
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-[#172524] dark:text-[#F1F5F4]">
+                {request.description}
+              </dd>
+            </div>
+          )}
+
+          {request.adminNotes && (
+            <div className="sm:col-span-2">
+              <dt className="text-xs text-[#64748B] dark:text-[#F1F5F4]/50">
+                Team update
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-[#172524] dark:text-[#F1F5F4]">
+                {request.adminNotes}
+              </dd>
+            </div>
+          )}
+        </dl>
       </section>
     </div>
   );

@@ -1,3 +1,4 @@
+
 export type RequestStatus =
   | "pending_review"
   | "approved"
@@ -23,6 +24,8 @@ export type Resource = {
   category: ResourceCategory;
   imageUrl?: string;
   availabilityLabel: string;
+  quantityAvailable?: number;
+  unit?: string;
 };
 
 export type AssistanceRequest = {
@@ -32,6 +35,8 @@ export type AssistanceRequest = {
   status: RequestStatus;
   submittedAt: string;
   updatedAt: string;
+  description?: string | null;
+  adminNotes?: string | null;
 };
 
 export type ActivityItem = {
@@ -40,4 +45,11 @@ export type ActivityItem = {
   description: string;
   createdAt: string;
   type: "request" | "approval" | "collection" | "distribution";
+};
+
+export type BeneficiaryProfile = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string | null;
 };

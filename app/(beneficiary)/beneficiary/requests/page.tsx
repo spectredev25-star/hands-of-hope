@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
@@ -14,8 +14,12 @@ import {
 import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-header";
 import { RequestStatusBadge } from "@/components/dashboard/request-status-badge";
 import { SectionEmptyState } from "@/components/dashboard/section-empty-state";
-import { mockRequests } from "@/libs/beneficiary/mock-data";
-import type { RequestStatus } from "@/libs/beneficiary/types";
+import { getMyRequests } from "@/libs/beneficiary/data";
+
+import type {
+  AssistanceRequest,
+  RequestStatus,
+} from "@/libs/beneficiary/types";
 
 const filters = [
   { label: "All requests", value: "all" },
@@ -30,26 +34,57 @@ const filters = [
 type RequestFilter = (typeof filters)[number]["value"];
 
 export default function BeneficiaryRequestsPage() {
+  const [requests, setRequests] = useState<AssistanceRequest[]>([]);
   const [activeFilter, setActiveFilter] =
     useState<RequestFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadRequests() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await getMyRequests();
+
+        if (active) setRequests(data);
+      } catch (err) {
+        if (active) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Unable to load your requests."
+          );
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadRequests();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const filteredRequests = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
-    return mockRequests.filter((request) => {
+    return requests.filter((request) => {
       const matchesStatus =
         activeFilter === "all" ||
         request.status === activeFilter;
 
-      // Adjust these fields if your existing mock request type
-      // uses different property names.
       const searchableText = [
         request.id,
         request.resourceName,
         request.category,
       ]
-        .filter(Boolean)
         .join(" ")
         .toLowerCase();
 
@@ -58,7 +93,7 @@ export default function BeneficiaryRequestsPage() {
 
       return matchesStatus && matchesSearch;
     });
-  }, [activeFilter, searchQuery]);
+  }, [requests, activeFilter, searchQuery]);
 
   return (
     <div className="space-y-8">
@@ -68,13 +103,13 @@ export default function BeneficiaryRequestsPage() {
         description="Follow every request from review to collection. We'll keep you informed as it moves forward."
       />
 
-      {/* Search and filters */}
       <section className="space-y-4">
         <div className="relative">
           <Search
             aria-hidden="true"
             className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
           />
+
           <input
             type="search"
             value={searchQuery}
@@ -114,19 +149,34 @@ export default function BeneficiaryRequestsPage() {
         </div>
       </section>
 
-      {/* Results */}
       <section aria-live="polite" className="space-y-4">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold text-[#071B1A] dark:text-[#F1F5F4]">
             Your requests
           </h2>
-          <span className="text-sm text-[#64748B] dark:text-[#F1F5F4]/60">
-            {filteredRequests.length}{" "}
-            {filteredRequests.length === 1 ? "request" : "requests"}
-          </span>
+
+          {!loading && (
+            <span className="text-sm text-[#64748B] dark:text-[#F1F5F4]/60">
+              {filteredRequests.length}{" "}
+              {filteredRequests.length === 1 ? "request" : "requests"}
+            </span>
+          )}
         </div>
 
-        {filteredRequests.length === 0 ? (
+        {loading ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="h-36 animate-pulse rounded-2xl bg-[#DCE7E2] dark:bg-[#0D2927]"
+              />
+            ))}
+          </div>
+        ) : error ? (
+          <div className="rounded-2xl border border-red-300 bg-red-50 p-5 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+            {error}
+          </div>
+        ) : filteredRequests.length === 0 ? (
           <SectionEmptyState
             icon={ClipboardList}
             title="No matching requests"
@@ -152,8 +202,9 @@ export default function BeneficiaryRequestsPage() {
                   <div className="min-w-0 space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wider text-[#64748B] dark:text-[#99F6E4]/70">
-                        Request #{request.id}
+                        Request #{request.id.slice(0, 8)}
                       </span>
+
                       <RequestStatusBadge
                         status={request.status as RequestStatus}
                       />
@@ -163,11 +214,9 @@ export default function BeneficiaryRequestsPage() {
                       {request.resourceName}
                     </h3>
 
-                    {request.category && (
-                      <p className="text-sm text-[#64748B] dark:text-[#F1F5F4]/60">
-                        {request.category}
-                      </p>
-                    )}
+                    <p className="text-sm capitalize text-[#64748B] dark:text-[#F1F5F4]/60">
+                      {request.category}
+                    </p>
 
                     <p className="text-sm leading-6 text-[#64748B] dark:text-[#F1F5F4]/70">
                       Check the request details to see its current progress

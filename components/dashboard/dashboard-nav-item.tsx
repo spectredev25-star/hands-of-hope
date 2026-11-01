@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Suspense } from "react";
@@ -36,6 +35,8 @@ function DashboardNavItemLinkContent({ item }: Props) {
   const isActive =
     pathname === item.href ||
     (item.href !== "/beneficiary/dashboard" &&
+      item.href !== "/organization/dashboard" &&
+      item.href !== "/admin/dashboard" &&
       pathname.startsWith(`${item.href}/`));
 
   const Icon = item.icon;

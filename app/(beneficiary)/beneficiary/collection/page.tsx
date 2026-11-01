@@ -1,4 +1,9 @@
+
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import {
   ArrowRight,
   CalendarClock,
@@ -10,14 +15,56 @@ import {
 import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-header";
 import { RequestStatusBadge } from "@/components/dashboard/request-status-badge";
 import { SectionEmptyState } from "@/components/dashboard/section-empty-state";
-import { mockRequests } from "@/libs/beneficiary/mock-data";
+
+import { getMyRequests } from "@/libs/beneficiary/data";
+
+import type { AssistanceRequest } from "@/libs/beneficiary/types";
 
 export default function CollectionPage() {
-  const readyRequests = mockRequests.filter(
+  const [requests, setRequests] = useState<AssistanceRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadRequests() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await getMyRequests();
+
+        if (isMounted) {
+          setRequests(data);
+        }
+      } catch (err) {
+        if (!isMounted) return;
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Unable to load your collection information."
+        );
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadRequests();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const readyRequests = requests.filter(
     (request) => request.status === "ready_for_collection"
   );
 
-  const approvedRequests = mockRequests.filter((request) =>
+  const approvedRequests = requests.filter((request) =>
     ["approved", "preparing"].includes(request.status)
   );
 
@@ -29,7 +76,21 @@ export default function CollectionPage() {
         description="Check whether an approved allocation is ready and review the next steps."
       />
 
-      {readyRequests.length === 0 ? (
+      {error && (
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/20 dark:text-red-300"
+        >
+          {error}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="space-y-4">
+          <div className="h-48 animate-pulse rounded-2xl bg-[#E8EFEB] dark:bg-[#0D2927]" />
+          <div className="h-24 animate-pulse rounded-2xl bg-[#E8EFEB] dark:bg-[#0D2927]" />
+        </div>
+      ) : readyRequests.length === 0 ? (
         <SectionEmptyState
           icon={QrCode}
           title="No collection is ready yet."
@@ -55,7 +116,7 @@ export default function CollectionPage() {
                   </h2>
 
                   <p className="mt-2 text-sm text-[#F1F5F4]/55">
-                    Request {request.id}
+                    Request {request.id.slice(0, 8).toUpperCase()}
                   </p>
                 </div>
 
@@ -68,9 +129,10 @@ export default function CollectionPage() {
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-[#F1F5F4]/65">
-                  The live collection authorization will appear here
-                  after the backend confirms the allocation and issues
-                  a valid collection token.
+                  Your collection authorization will appear here after
+                  the backend confirms the allocation and issues a valid
+                  collection token. Please wait for official collection
+                  instructions before visiting a distribution centre.
                 </p>
               </div>
 
@@ -86,7 +148,7 @@ export default function CollectionPage() {
         </div>
       )}
 
-      {approvedRequests.length > 0 && (
+      {!loading && approvedRequests.length > 0 && (
         <section className="space-y-4">
           <div>
             <h2 className="text-base font-semibold text-[#172524] dark:text-[#F1F5F4]">
@@ -110,13 +172,16 @@ export default function CollectionPage() {
                 </p>
 
                 <p className="mt-1 text-xs text-[#64748B] dark:text-[#F1F5F4]/45">
-                  Reference: {request.id}
+                  Reference: {request.id.slice(0, 8).toUpperCase()}
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <RequestStatusBadge status={request.status} />
-                <ArrowRight size={16} className="text-[#0F766E] dark:text-[#99F6E4]" />
+                <ArrowRight
+                  size={16}
+                  className="text-[#0F766E] dark:text-[#99F6E4]"
+                />
               </div>
             </Link>
           ))}
