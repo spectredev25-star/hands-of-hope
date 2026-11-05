@@ -20,6 +20,8 @@ import {
 import { createClient } from "@/libs/supabase/client";
 import RoleSelector, { type UserRole } from "./role-selector";
 
+const SITE_URL = "https://hands-of-hope.vercel.app";
+
 export default function SignupForm() {
   const [role, setRole] = useState<UserRole>("beneficiary");
   const [fullName, setFullName] = useState("");
@@ -89,7 +91,7 @@ export default function SignupForm() {
           email: email.trim(),
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/login`,
+            emailRedirectTo: `${SITE_URL}/auth/callback?next=/login`,
             data: {
               full_name: fullName.trim(),
               signup_role: role,
@@ -158,9 +160,7 @@ export default function SignupForm() {
         await supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: `${
-              window.location.origin
-            }/auth/callback?next=${encodeURIComponent(
+            redirectTo: `${SITE_URL}/auth/callback?next=${encodeURIComponent(
               dashboardRoutes[role]
             )}`,
           },
@@ -308,7 +308,7 @@ export default function SignupForm() {
           <div className="mb-2 flex items-center justify-between gap-3">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-slate-700"
+              className="mb-2 block text-sm font-medium text-slate-700"
             >
               Password
             </label>

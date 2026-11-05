@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Careers & Jobs", href: "/careers" },
 ];
 
 export function Navbar() {
