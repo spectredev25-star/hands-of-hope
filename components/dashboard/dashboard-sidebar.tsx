@@ -87,8 +87,8 @@ export function DashboardSidebar({
   return (
     <aside
       className={[
-        "flex h-full flex-col bg-[#071B1A] text-[#F1F5F4]",
-        mobile ? "w-full" : "w-[256px]",
+        "flex h-dvh min-h-0 flex-col overflow-y-auto overscroll-contain bg-[#071B1A] text-[#F1F5F4]",
+        mobile ? "w-full" : "w-[256px] shrink-0",
       ].join(" ")}
     >
       <Link
