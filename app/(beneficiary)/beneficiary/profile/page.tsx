@@ -1,6 +1,7 @@
 
 import { connection } from "next/server";
-import { Check, CircleUserRound } from "lucide-react";
+import Image from "next/image";
+import { Check, CircleUserRound, ImagePlus } from "lucide-react";
 
 import { DashboardPageHeader } from "@/components/dashboard/dashboard-page-header";
 import { getMyProfile } from "@/libs/beneficiary/server";
@@ -17,6 +18,9 @@ const errorMessages: Record<string, string> = {
   "invalid-name": "Please enter a valid full name.",
   "invalid-phone": "Your phone number is too long.",
   "save-failed": "We couldn't save your changes. Please try again.",
+  "invalid-avatar-type": "Choose a PNG, JPG or WebP image.",
+  "avatar-too-large": "Your profile image must be 2 MB or smaller.",
+  "avatar-upload-failed": "We couldn't upload your profile image. Check that the avatars storage bucket exists and is public.",
 };
 
 export default async function BeneficiaryProfilePage({
@@ -43,9 +47,7 @@ export default async function BeneficiaryProfilePage({
 
       <section className="rounded-2xl border border-[#DCE7E2] bg-white p-6 dark:border-[#244540] dark:bg-[#0D2927] sm:p-8">
         <div className="flex items-center gap-4 border-b border-[#DCE7E2] pb-6 dark:border-[#244540]">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0F766E]/10 text-[#0F766E] dark:bg-[#14B8A6]/10 dark:text-[#99F6E4]">
-            <CircleUserRound size={28} strokeWidth={1.5} />
-          </div>
+          <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-[#0F766E]/10 text-[#0F766E] dark:bg-[#14B8A6]/10 dark:text-[#99F6E4]">{profile.avatarUrl ? <Image src={profile.avatarUrl} alt="Your profile image" fill sizes="56px" className="object-cover" unoptimized /> : <CircleUserRound size={28} strokeWidth={1.5} />}</div>
 
           <div>
             <h2 className="text-base font-semibold text-[#172524] dark:text-[#F1F5F4]">
@@ -58,7 +60,8 @@ export default async function BeneficiaryProfilePage({
           </div>
         </div>
 
-        <form action={updateBeneficiaryProfile} className="mt-6 space-y-5">
+        <form action={updateBeneficiaryProfile} encType="multipart/form-data" className="mt-6 space-y-5">
+          <div className="flex flex-col gap-3 rounded-xl border border-dashed border-[#315B54] bg-[#071B1A]/60 p-4 sm:flex-row sm:items-center"><div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#315B54] bg-[#0F766E]/15 text-[#99F6E4]">{profile.avatarUrl ? <Image src={profile.avatarUrl} alt="Current profile image" fill sizes="64px" className="object-cover" unoptimized /> : <ImagePlus size={24} />}</div><div className="min-w-0 flex-1"><label htmlFor="beneficiary-avatar" className="block text-sm font-semibold text-[#F1F5F4]">Profile image</label><input id="beneficiary-avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/webp" className="mt-2 block w-full text-sm text-[#9AafAA] file:mr-3 file:rounded-lg file:border-0 file:bg-[#0F766E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-white" /><p className="mt-1 text-xs text-[#9AafAA]">PNG, JPG or WebP · Maximum 2 MB. Your image appears in the dashboard header.</p></div></div>
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-[#172524] dark:text-[#F1F5F4]">
