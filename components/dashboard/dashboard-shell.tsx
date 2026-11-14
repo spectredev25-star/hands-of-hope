@@ -16,7 +16,7 @@ export function DashboardShell({ children, avatarUrl, profileName }: Props) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7] text-[#172524] transition-colors duration-300 dark:bg-[#071B1A] dark:text-[#F1F5F4]">
+    <div className="min-h-screen bg-[#071B1A] text-[#F1F5F4]">
       <div className="flex min-h-screen">
         <div className="fixed inset-y-0 left-0 z-30 hidden lg:block">
           <DashboardSidebar />
