@@ -141,11 +141,11 @@ export default function LoginForm() {
           Hands of Hope
         </Link>
 
-        <h1 className="mt-7 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="mt-7 text-3xl font-bold tracking-tight text-[#F1F5F4] sm:text-4xl">
           Welcome back
         </h1>
 
-        <p className="mt-3 text-sm leading-6 text-slate-500">
+        <p className="mt-3 text-sm leading-6 text-slate-400">
           Sign in to continue making a difference.
         </p>
       </div>
@@ -154,7 +154,7 @@ export default function LoginForm() {
         <div>
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-medium text-slate-700"
+            className="mb-2 block text-sm font-medium text-slate-200"
           >
             Email address
           </label>
@@ -173,7 +173,7 @@ export default function LoginForm() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-4 text-sm text-[#F1F5F4] outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
           </div>
         </div>
@@ -182,14 +182,14 @@ export default function LoginForm() {
           <div className="mb-2 flex items-center justify-between">
             <label
               htmlFor="password"
-              className="text-sm font-medium text-slate-700"
+              className="text-sm font-medium text-slate-200"
             >
               Password
             </label>
 
             <Link
               href="/forgot-password"
-              className="inline-flex min-h-8 items-center rounded-md px-2 text-sm font-semibold text-[#0F766E] underline-offset-4 transition-colors hover:bg-teal-50 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E] focus-visible:ring-offset-2"
+              className="inline-flex min-h-8 items-center rounded-md px-2 text-sm font-semibold text-[#0F766E] underline-offset-4 transition-colors hover:bg-[#153C38] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E] focus-visible:ring-offset-2"
             >
               Forgot password?
             </Link>
@@ -209,7 +209,7 @@ export default function LoginForm() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter your password"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-12 text-sm text-[#F1F5F4] outline-none focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
 
             <button
@@ -260,7 +260,7 @@ export default function LoginForm() {
         </button>
       </form>
 
-      <p className="mt-7 text-center text-sm text-slate-500">
+      <p className="mt-7 text-center text-sm text-slate-400">
         Don't have an account?{" "}
         <Link
           href="/signup"
