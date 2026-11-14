@@ -4384,3 +4384,121 @@ img {
     font-size: 10px;
   }
 }
+
+/* =========================================================
+   LIGHT THEME LANDING PAGE OVERRIDES
+   Keep the visual hierarchy while allowing the landing page
+   to follow the selected theme instead of forcing dark panels.
+========================================================= */
+html:not(.dark) .workflow-section {
+  color: #172524;
+  background:
+    radial-gradient(ellipse at 82% 44%, rgba(20,184,166,.10), transparent 38%),
+    #f4f8f5;
+}
+html:not(.dark) .workflow-steps-header,
+html:not(.dark) .workflow-bottom-note {
+  border-color: #d5e5df;
+  color: #58736d;
+}
+html:not(.dark) .workflow-step { color: #172524; }
+html:not(.dark) .workflow-step:hover { border-color: rgba(15,118,110,.2); background: #eaf4f0; }
+html:not(.dark) .workflow-step.is-active {
+  border-color: rgba(15,118,110,.3);
+  background: linear-gradient(115deg, rgba(20,184,166,.12), rgba(255,255,255,.92));
+}
+html:not(.dark) .workflow-step-eyebrow,
+html:not(.dark) .workflow-step-description,
+html:not(.dark) .workflow-bottom-note p { color: #58736d; }
+html:not(.dark) .workflow-step-title,
+html:not(.dark) .workflow-bottom-note strong { color: #172524; }
+html:not(.dark) .workflow-step-number { color: #0f766e; border-color: #c5ded5; background: #edf7f3; }
+html:not(.dark) .workflow-visual-column,
+html:not(.dark) .trust-visual {
+  color: #172524;
+  border-color: #d5e5df;
+  background: #ffffff;
+  box-shadow: 0 24px 65px rgba(15, 55, 47, .08);
+}
+html:not(.dark) .workflow-visual-topbar,
+html:not(.dark) .trust-visual__topbar { border-color: #dce7e2; background: #f4f8f5; }
+html:not(.dark) .workflow-window-label,
+html:not(.dark) .workflow-stage-heading h3,
+html:not(.dark) .workflow-discover-heading h4,
+html:not(.dark) .workflow-request-top h4,
+html:not(.dark) .workflow-review-top h4,
+html:not(.dark) .workflow-collect-heading h4,
+html:not(.dark) .workflow-resource-text strong,
+html:not(.dark) .workflow-status-card-heading strong,
+html:not(.dark) .workflow-status-copy strong,
+html:not(.dark) .workflow-collection-info > strong,
+html:not(.dark) .trust-visual__heading h3,
+html:not(.dark) .trust-visual__active-heading h4,
+html:not(.dark) .trust-visual__record > div > p { color: #172524; }
+html:not(.dark) .workflow-search,
+html:not(.dark) .workflow-fake-input,
+html:not(.dark) .workflow-fake-textarea,
+html:not(.dark) .workflow-status-card,
+html:not(.dark) .workflow-collection-card,
+html:not(.dark) .trust-visual__journey,
+html:not(.dark) .trust-visual__active-stage {
+  color: #334d47;
+  border-color: #dce7e2;
+  background: #f5f9f6;
+}
+html:not(.dark) .workflow-resource-card { border-color: #dce7e2; background: #fff; }
+html:not(.dark) .workflow-resource-text > span,
+html:not(.dark) .workflow-window-separator,
+html:not(.dark) .workflow-resource-count,
+html:not(.dark) .workflow-stage-label,
+html:not(.dark) .workflow-micro-label,
+html:not(.dark) .workflow-status-copy > span,
+html:not(.dark) .workflow-collection-description,
+html:not(.dark) .trust-visual__active-stage > p,
+html:not(.dark) .trust-visual__footer,
+html:not(.dark) .trust-visual__topbar-label,
+html:not(.dark) .trust-visual__topbar-index { color: #607a73; }
+html:not(.dark) .workflow-step-detail { color: #36564e; }
+html:not(.dark) .workflow-status-card-heading,
+html:not(.dark) .workflow-status-connector,
+html:not(.dark) .trust-visual__active-stage,
+html:not(.dark) .trust-visual__record,
+html:not(.dark) .trust-visual__footer { border-color: #dce7e2; }
+html:not(.dark) .trust-section {
+  color: #172524 !important;
+  background: #f4f8f5 !important;
+}
+html:not(.dark) .trust-section :is(h2,h3,h4) { color: #172524; }
+html:not(.dark) .trust-section :is(p, .trust-section__description) { color: #58736d; }
+html:not(.dark) .trust-section__experience { border-color: #dce7e2; background: #fff; }
+html:not(.dark) .trust-section__principle,
+html:not(.dark) .trust-timeline__item { border-color: #dce7e2; background: #fff; }
+html:not(.dark) .footer-cta-section {
+  color: #172524;
+  background: #eaf4f0;
+}
+html:not(.dark) .footer-cta-content > p { color: #58736d; }
+html:not(.dark) .footer-cta-secondary { color: #0f4f48; border-color: #9fc8bb; background: rgba(255,255,255,.55); }
+html:not(.dark) .site-footer { color: #172524; border-color: #d5e5df; background: #f7faf8; }
+html:not(.dark) .site-footer :is(.footer-socials-heading,.footer-link-column h3,.footer-contact-column h3,.footer-contact-link,.footer-copyright span) { color: #172524; }
+html:not(.dark) .site-footer :is(.footer-brand-description,.footer-link-column li a,.footer-contact-intro,.footer-contact-link small,.footer-location-note p,.footer-copyright,.footer-legal-links a) { color: #58736d; }
+html:not(.dark) .site-footer :is(.footer-contact-link,.footer-social-link) { border-color: #d5e5df; background: #fff; }
+html:not(.dark) .site-footer :is(.footer-bottom,.site-footer-inner) { border-color: #d5e5df; }
+
+/* Light-mode hero: retain the photograph, but replace the dark overlay
+   with a bright, readable treatment and theme-aware foregrounds. */
+html:not(.dark) .hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(248,252,249,.97) 0%, rgba(248,252,249,.91) 42%, rgba(248,252,249,.66) 72%, rgba(248,252,249,.35) 100%),
+    linear-gradient(0deg, rgba(248,252,249,.5), transparent 45%);
+}
+html:not(.dark) .hero-section-root { background: #f8fcf9; }
+html:not(.dark) .hero-copy { color: #172524 !important; }
+html:not(.dark) .hero-copy-muted { color: #49665e !important; }
+html:not(.dark) .hero-outline-button { color: #0f4f48 !important; border-color: rgba(15,79,72,.35) !important; background: rgba(255,255,255,.6) !important; }
+html:not(.dark) .hero-scroll-cue { color: #49665e !important; border-color: rgba(15,79,72,.25) !important; }
+html:not(.dark) .landing-navbar { background: rgba(248,252,249,.92) !important; border-color: #dce7e2 !important; }
+html:not(.dark) .landing-navbar :is(.landing-brand,.landing-nav-link) { color: #172524 !important; }
+html:not(.dark) .landing-navbar .landing-outline-button { color: #0f4f48 !important; border-color: #a8c9bf !important; background: white !important; }
+html:not(.dark) .landing-mobile-menu { background: rgba(255,255,255,.97) !important; border-color: #dce7e2 !important; }
+html:not(.dark) .landing-mobile-menu a { color: #172524 !important; }
