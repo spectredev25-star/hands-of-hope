@@ -193,11 +193,11 @@ export default function SignupForm() {
           <span>Hands of Hope</span>
         </Link>
 
-        <h1 className="mt-7 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="mt-7 text-3xl font-bold tracking-tight text-[#F1F5F4] sm:text-4xl">
           Create your account
         </h1>
 
-        <p className="mt-3 text-sm leading-6 text-slate-500">
+        <p className="mt-3 text-sm leading-6 text-slate-400">
           Join a community making assistance more accessible,
           transparent, and meaningful.
         </p>
@@ -205,7 +205,7 @@ export default function SignupForm() {
 
       <form onSubmit={handleSignup} className="space-y-5">
         <div>
-          <label className="mb-3 block text-sm font-semibold text-slate-700">
+          <label className="mb-3 block text-sm font-semibold text-slate-200">
             I want to join as a
           </label>
 
@@ -215,7 +215,7 @@ export default function SignupForm() {
         <div>
           <label
             htmlFor="fullName"
-            className="mb-2 block text-sm font-medium text-slate-700"
+            className="mb-2 block text-sm font-medium text-slate-200"
           >
             Full name
           </label>
@@ -235,7 +235,7 @@ export default function SignupForm() {
               value={fullName}
               onChange={(event) => setFullName(event.target.value)}
               placeholder="Enter your full name"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-4 text-sm text-[#F1F5F4] outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
           </div>
         </div>
@@ -248,7 +248,7 @@ export default function SignupForm() {
           >
             <label
               htmlFor="organizationName"
-              className="mb-2 block text-sm font-medium text-slate-700"
+              className="mb-2 block text-sm font-medium text-slate-200"
             >
               Organization name
             </label>
@@ -270,7 +270,7 @@ export default function SignupForm() {
                   setOrganizationName(event.target.value)
                 }
                 placeholder="Enter your organization name"
-                className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+                className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-4 text-sm text-[#F1F5F4] outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
               />
             </div>
           </motion.div>
@@ -279,7 +279,7 @@ export default function SignupForm() {
         <div>
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-medium text-slate-700"
+            className="mb-2 block text-sm font-medium text-slate-200"
           >
             Email address
           </label>
@@ -299,7 +299,7 @@ export default function SignupForm() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-4 text-sm text-[#F1F5F4] outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
           </div>
         </div>
@@ -308,7 +308,7 @@ export default function SignupForm() {
           <div className="mb-2 flex items-center justify-between gap-3">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-slate-700"
+              className="block text-sm font-medium text-slate-200"
             >
               Password
             </label>
@@ -334,7 +334,7 @@ export default function SignupForm() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Create a strong password"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-12 text-sm text-[#F1F5F4] outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
 
             <button
@@ -345,7 +345,7 @@ export default function SignupForm() {
               aria-label={
                 showPassword ? "Hide password" : "Show password"
               }
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
             >
               {showPassword ? (
                 <EyeOff size={18} />
@@ -359,7 +359,7 @@ export default function SignupForm() {
         <div>
           <label
             htmlFor="confirmPassword"
-            className="mb-2 block text-sm font-medium text-slate-700"
+            className="mb-2 block text-sm font-medium text-slate-200"
           >
             Confirm password
           </label>
@@ -381,7 +381,7 @@ export default function SignupForm() {
                 setConfirmPassword(event.target.value)
               }
               placeholder="Enter your password again"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
+              className="w-full rounded-xl border border-[#244540] bg-[#0D2927] py-3 pl-11 pr-12 text-sm text-[#F1F5F4] outline-none transition placeholder:text-slate-400 focus:border-[#0F766E] focus:ring-4 focus:ring-teal-700/10"
             />
 
             <button
@@ -394,7 +394,7 @@ export default function SignupForm() {
                   ? "Hide confirmation password"
                   : "Show confirmation password"
               }
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
             >
               {showConfirmPassword ? (
                 <EyeOff size={18} />
@@ -418,7 +418,7 @@ export default function SignupForm() {
 
           <label
             htmlFor="terms"
-            className="text-sm leading-6 text-slate-500"
+            className="text-sm leading-6 text-slate-400"
           >
             I agree to the{" "}
             <Link
@@ -491,7 +491,7 @@ export default function SignupForm() {
         type="button"
         onClick={handleGoogleSignup}
         disabled={loading || googleLoading}
-        className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#244540] bg-[#0D2927] px-5 py-3 text-sm font-semibold text-slate-200 transition hover:bg-[#153C38] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {googleLoading ? (
           <Loader2 size={18} className="animate-spin" />
@@ -504,7 +504,7 @@ export default function SignupForm() {
           : "Continue with Google"}
       </button>
 
-      <p className="mt-7 text-center text-sm text-slate-500">
+      <p className="mt-7 text-center text-sm text-slate-400">
         Already have an account?{" "}
         <Link
           href="/login"
