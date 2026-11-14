@@ -13,16 +13,16 @@ export default function AuthLayout({
   children,
 }: AuthLayoutProps) {
   return (
-    <main className="min-h-screen bg-[#F8FAFC] lg:grid lg:grid-cols-[0.9fr_1.1fr]">
+    <main className="auth-screen grid h-dvh min-h-0 overflow-hidden bg-[#071B1A] text-[#F1F5F4] lg:grid-cols-[0.9fr_1.1fr]">
       {/* Brand panel */}
       <AuthBrandPanel />
 
       {/* Form panel */}
-      <section className="relative flex min-h-screen flex-col justify-center px-5 py-5 sm:px-10 lg:px-16 xl:px-24">
+      <section className="relative flex min-h-0 flex-col justify-center overflow-y-auto px-5 py-4 sm:px-10 lg:px-12 xl:px-20">
         {/* Mobile brand */}
         <Link
           href="/"
-          className="mb-10 inline-flex items-center gap-2 self-start lg:hidden"
+          className="mb-5 inline-flex items-center gap-2 self-start lg:hidden"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F766E] text-white">
             <HeartHandshake size={22} />
@@ -33,11 +33,11 @@ export default function AuthLayout({
           </span>
         </Link>
 
-        <div className="mx-auto w-full max-w-[440px]">
+        <div className="mx-auto w-full max-w-[440px] py-2">
           {children}
         </div>
 
-        <p className="mt-5 text-center text-xs leading-6 text-slate-500">
+        <p className="mt-3 text-center text-xs leading-5 text-slate-400">
           By continuing, you agree to our{" "}
           <Link
             href="/terms"
