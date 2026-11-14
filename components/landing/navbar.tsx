@@ -6,7 +6,6 @@ import { useState } from "react";
 import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -51,7 +50,6 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 sm:flex">
-          <ThemeToggle />
 
           <Button
             variant="outline"
@@ -73,7 +71,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-1 sm:hidden">
-          <ThemeToggle />
 
           <Button
             variant="ghost"
