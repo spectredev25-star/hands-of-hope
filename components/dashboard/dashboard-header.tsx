@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Bell, Menu, Search } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 type Props = {
   onMenuClick: () => void;
@@ -45,7 +45,6 @@ export function DashboardHeader({ onMenuClick, avatarUrl, profileName }: Props) 
       </div>
 
       <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-        <ThemeToggle />
         <div className="relative">
           <button
             type="button"
@@ -64,7 +63,7 @@ export function DashboardHeader({ onMenuClick, avatarUrl, profileName }: Props) 
             </div>
           )}
         </div>
-        <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#244540] bg-[#0F766E]/20 text-sm font-semibold text-[#99F6E4]">
+        <Link href={isOrganization ? "/organization/profile" : "/beneficiary/profile"} aria-label="Edit your profile" title="Edit profile" className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#244540] bg-[#0F766E]/20 text-sm font-semibold text-[#99F6E4] transition hover:ring-2 hover:ring-[#14B8A6]">
           {avatarUrl ? (
             <Image
               src={avatarUrl}
@@ -77,7 +76,7 @@ export function DashboardHeader({ onMenuClick, avatarUrl, profileName }: Props) 
           ) : (
             <span>{profileName?.trim().charAt(0).toUpperCase() || "H"}</span>
           )}
-        </div>
+        </Link>
       </div>
     </header>
   );
