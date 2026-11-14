@@ -21,6 +21,7 @@ export function ThemeToggle() {
         size="icon"
         aria-label="Change colour theme"
         disabled
+        className="rounded-full text-foreground hover:bg-muted"
       >
         <Sun className="size-5" />
       </Button>
@@ -34,14 +35,11 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      title={`Switch to ${isDark ? "light" : "dark"} mode`}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="rounded-full text-white hover:bg-white/10 hover:text-white"
+      className="rounded-full text-foreground hover:bg-muted hover:text-foreground"
     >
-      {isDark ? (
-        <Sun className="size-5" />
-      ) : (
-        <Moon className="size-5" />
-      )}
+      {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
     </Button>
   );
 }

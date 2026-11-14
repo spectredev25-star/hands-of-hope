@@ -21,7 +21,7 @@ export function Navbar() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="fixed inset-x-0 top-0 z-50 bg-[#172524]"
+      className="landing-navbar fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#172524]"
     >
       <nav className="container-shell flex h-20 items-center justify-between border-b border-white/10">
         <Link
@@ -33,7 +33,7 @@ export function Navbar() {
             <HandHeart className="size-6" />
           </span>
 
-          <span className="font-heading text-lg font-bold tracking-tight text-white sm:text-xl">
+          <span className="landing-brand font-heading text-lg font-bold tracking-tight text-white sm:text-xl">
             Hands of <span className="text-teal-300">Hope</span>
           </span>
         </Link>
@@ -43,7 +43,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/75 transition-colors hover:text-teal-300"
+              className="landing-nav-link text-sm font-medium text-white/75 transition-colors hover:text-teal-300"
             >
               {link.label}
             </Link>
@@ -55,7 +55,7 @@ export function Navbar() {
 
           <Button
             variant="outline"
-            className="rounded-full border-white/25 bg-white/5 px-5 text-white hover:bg-white/10 hover:text-white"
+            className="landing-outline-button rounded-full border-white/25 bg-white/5 px-5 text-white hover:bg-white/10 hover:text-white"
             asChild
           >
             <Link href="/signup">Sign Up</Link>
@@ -81,7 +81,7 @@ export function Navbar() {
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="text-white hover:bg-white/10 hover:text-white"
+            className="text-foreground hover:bg-muted hover:text-foreground"
           >
             {menuOpen ? (
               <X className="size-5" />
@@ -94,7 +94,7 @@ export function Navbar() {
 
       {menuOpen && (
         <div className="container-shell md:hidden">
-          <div className="mt-2 space-y-1 rounded-2xl border border-white/10 bg-[#071B1A]/95 p-4 shadow-2xl backdrop-blur-xl">
+          <div className="landing-mobile-menu mt-2 space-y-1 rounded-2xl border border-white/10 bg-[#071B1A]/95 p-4 shadow-2xl backdrop-blur-xl">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

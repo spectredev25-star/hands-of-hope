@@ -28,7 +28,7 @@ export function HeroSection() {
 
   return (
     <section id="home"
-      className="relative isolate flex min-h-[760px] min-h-svh items-center overflow-hidden bg-[#071B1A]">
+      className="hero-section-root relative isolate flex min-h-[760px] min-h-svh items-center overflow-hidden bg-[#071B1A]">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-20 bg-cover bg-center"
@@ -66,7 +66,7 @@ export function HeroSection() {
         >
           <motion.div
             variants={entrance}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-200/20 bg-teal-100/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-200 backdrop-blur-sm sm:text-sm"
+            className="hero-copy mb-5 inline-flex items-center gap-2 rounded-full border border-teal-200/20 bg-teal-100/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-200 backdrop-blur-sm sm:text-sm"
           >
             <HeartHandshake className="size-4" />
             A stronger, kinder tomorrow
@@ -78,7 +78,7 @@ export function HeroSection() {
 
           <motion.p
             variants={entrance}
-            className="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8"
+            className="hero-copy-muted mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8"
           >
             Hands of Hope bridges the gap between generous hearts and real
             needs, helping connect people seeking assistance with available
@@ -104,7 +104,7 @@ export function HeroSection() {
               size="lg"
               variant="outline"
               asChild
-              className="h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:border-white/50 hover:bg-white/10 hover:text-white"
+              className="hero-outline-button h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:border-white/50 hover:bg-white/10 hover:text-white"
             >
               <Link href="/signup">
                 Become a Partner
@@ -114,7 +114,7 @@ export function HeroSection() {
 
           <motion.div
             variants={entrance}
-            className="mt-10 flex items-center gap-3 text-sm text-white/55"
+            className="hero-scroll-cue mt-10 flex items-center gap-3 text-sm text-white/55"
           >
             <span className="flex size-8 items-center justify-center rounded-full border border-white/20">
               <ArrowDown className="size-4 animate-bounce" />

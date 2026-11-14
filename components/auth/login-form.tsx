@@ -189,7 +189,7 @@ export default function LoginForm() {
 
             <Link
               href="/forgot-password"
-              className="text-xs font-semibold text-[#0F766E] hover:underline"
+              className="inline-flex min-h-8 items-center rounded-md px-2 text-sm font-semibold text-[#0F766E] underline-offset-4 transition-colors hover:bg-teal-50 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E] focus-visible:ring-offset-2"
             >
               Forgot password?
             </Link>
