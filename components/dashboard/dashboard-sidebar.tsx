@@ -1,12 +1,8 @@
-
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  HeartHandshake,
-  ArrowUpRight,
-} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { HeartHandshake, ArrowUpRight, LogOut } from "lucide-react";
 
 import {
   beneficiaryNavigation,
@@ -14,7 +10,7 @@ import {
   adminNavigation,
   type DashboardNavItem,
 } from "@/libs/dashboard/navigation";
-
+import { createClient } from "@/libs/supabase/client";
 import { DashboardNavItemLink } from "./dashboard-nav-item";
 
 type DashboardSidebarProps = {
@@ -27,19 +23,17 @@ export function DashboardSidebar({
   onNavigate,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Identify the current dashboard role.
   const isAdmin = pathname.startsWith("/admin");
   const isOrganization = pathname.startsWith("/organization");
 
-  // Select navigation based on the current role.
   const navigation: DashboardNavItem[] = isAdmin
     ? adminNavigation
     : isOrganization
       ? organizationNavigation
       : beneficiaryNavigation;
 
-  // Role-specific sidebar content.
   const sectionTitle = isAdmin
     ? "Administration"
     : isOrganization
@@ -76,6 +70,20 @@ export function DashboardSidebar({
       ? "View contributions"
       : "Explore resources";
 
+  async function handleSignOut() {
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Sign out failed:", error);
+      return;
+    }
+
+    onNavigate?.();
+    router.replace("/login");
+    router.refresh();
+  }
+
   return (
     <aside
       className={[
@@ -83,7 +91,6 @@ export function DashboardSidebar({
         mobile ? "w-full" : "w-[256px]",
       ].join(" ")}
     >
-      {/* Brand */}
       <Link
         href="/"
         onClick={onNavigate}
@@ -92,28 +99,17 @@ export function DashboardSidebar({
         <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F766E]">
           <HeartHandshake size={22} strokeWidth={1.8} />
         </span>
-
         <span className="flex flex-col">
-          <span className="text-sm font-semibold tracking-wide">
-            Hands of Hope
-          </span>
-
-          <span className="mt-0.5 text-xs text-[#F1F5F4]/50">
-            {workspaceDescription}
-          </span>
+          <span className="text-sm font-semibold tracking-wide">Hands of Hope</span>
+          <span className="mt-0.5 text-xs text-[#F1F5F4]/50">{workspaceDescription}</span>
         </span>
       </Link>
 
-      {/* Navigation */}
       <div className="px-4 pt-7">
         <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F1F5F4]/40">
           {sectionTitle}
         </p>
-
-        <nav
-          aria-label={`${sectionTitle} navigation`}
-          className="space-y-1.5"
-        >
+        <nav aria-label={`${sectionTitle} navigation`} className="space-y-1.5">
           {navigation.map((item) => (
             <div key={item.href} onClick={onNavigate}>
               <DashboardNavItemLink item={item} />
@@ -122,21 +118,13 @@ export function DashboardSidebar({
         </nav>
       </div>
 
-      {/* Encouragement panel */}
-      <div className="mt-auto p-4">
+      <div className="mt-auto space-y-3 p-4">
         <div className="rounded-2xl border border-[#244540] bg-[#0D2927] p-4">
           <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-[#0F766E]/20 text-[#99F6E4]">
             <HeartHandshake size={19} />
           </div>
-
-          <p className="text-sm font-medium">
-            {footerTitle}
-          </p>
-
-          <p className="mt-1.5 text-xs leading-5 text-[#F1F5F4]/60">
-            {footerDescription}
-          </p>
-
+          <p className="text-sm font-medium">{footerTitle}</p>
+          <p className="mt-1.5 text-xs leading-5 text-[#F1F5F4]/60">{footerDescription}</p>
           <Link
             href={footerLink}
             onClick={onNavigate}
@@ -147,7 +135,16 @@ export function DashboardSidebar({
           </Link>
         </div>
 
-        <p className="px-2 pb-1 pt-4 text-center text-[10px] text-[#F1F5F4]/30">
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="flex min-h-11 w-full items-center gap-3 rounded-xl border border-[#315B54] px-4 text-sm font-medium text-[#F1F5F4]/80 transition-colors hover:border-red-400/50 hover:bg-red-400/10 hover:text-white"
+        >
+          <LogOut size={17} />
+          Sign out
+        </button>
+
+        <p className="px-2 pb-1 pt-1 text-center text-[10px] text-[#F1F5F4]/30">
           Every act of kindness counts.
         </p>
       </div>
