@@ -3,7 +3,6 @@ import { DM_Sans, Manrope } from "next/font/google";
 
 import "./globals.css";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -32,13 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${dmSans.variable} ${manrope.variable} font-sans`}
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

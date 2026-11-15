@@ -29,7 +29,7 @@ export function AuthBrandPanel() {
       </Link>
 
       {/* Illustration */}
-      <div className="relative mx-auto flex w-full max-w-lg flx-1 flex-col items-center justify-center py-12">
+      <div className="relative mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center py-12">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}

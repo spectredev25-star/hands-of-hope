@@ -38,6 +38,7 @@ type ProfileRow = {
   full_name: string;
   email: string | null;
   phone: string | null;
+  avatar_url: string | null;
 };
 
 export type CompletedDistribution = {
@@ -150,7 +151,7 @@ export async function getMyProfile(): Promise<BeneficiaryProfile> {
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, full_name, email, phone")
+    .select("id, full_name, email, phone, avatar_url")
     .eq("id", beneficiaryId)
     .single();
 
@@ -166,6 +167,7 @@ export async function getMyProfile(): Promise<BeneficiaryProfile> {
     fullName: profile.full_name,
     email: profile.email ?? "",
     phone: profile.phone,
+    avatarUrl: profile.avatar_url,
   };
 }
 

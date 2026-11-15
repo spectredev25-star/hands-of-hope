@@ -4,6 +4,7 @@ import { connection } from "next/server";
 
 import { requireRole } from "@/libs/auth/authorize";
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { createClient } from "@/libs/supabase/server";
 
 function DashboardLoading() {
   return (
@@ -29,9 +30,11 @@ async function AuthorizedBeneficiaryLayout({
   // Defer request-specific work until a real request exists.
   await connection();
 
-  await requireRole(["beneficiary"]);
+  const { user } = await requireRole(["beneficiary"]);
+  const supabase = await createClient();
+  const { data: profile } = await supabase.from("profiles").select("full_name, avatar_url").eq("id", user.id).maybeSingle();
 
-  return <DashboardShell>{children}</DashboardShell>;
+  return <DashboardShell avatarUrl={profile?.avatar_url} profileName={profile?.full_name}>{children}</DashboardShell>;
 }
 
 export default function BeneficiaryLayout({

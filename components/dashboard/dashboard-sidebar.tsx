@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { HeartHandshake, ArrowUpRight, LogOut } from "lucide-react";
 
 import {
@@ -24,6 +25,7 @@ export function DashboardSidebar({
 }: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [signOutError, setSignOutError] = useState<string | null>(null);
 
   const isAdmin = pathname.startsWith("/admin");
   const isOrganization = pathname.startsWith("/organization");
@@ -71,24 +73,32 @@ export function DashboardSidebar({
       : "Explore resources";
 
   async function handleSignOut() {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signOut();
+    setSignOutError(null);
 
-    if (error) {
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error("Sign out failed:", error);
+        setSignOutError("We couldn't sign you out. Please try again.");
+        return;
+      }
+
+      onNavigate?.();
+      router.replace("/login");
+      router.refresh();
+    } catch (error) {
       console.error("Sign out failed:", error);
-      return;
+      setSignOutError("We couldn't sign you out. Please try again.");
     }
-
-    onNavigate?.();
-    router.replace("/login");
-    router.refresh();
   }
 
   return (
     <aside
       className={[
-        "flex h-full flex-col bg-[#071B1A] text-[#F1F5F4]",
-        mobile ? "w-full" : "w-[256px]",
+        "flex h-dvh min-h-0 flex-col overflow-y-auto overscroll-contain bg-[#071B1A] text-[#F1F5F4]",
+        mobile ? "w-full" : "w-[256px] shrink-0",
       ].join(" ")}
     >
       <Link
@@ -134,6 +144,12 @@ export function DashboardSidebar({
             <ArrowUpRight size={14} />
           </Link>
         </div>
+
+        {signOutError && (
+          <p role="alert" className="px-2 text-xs text-red-300">
+            {signOutError}
+          </p>
+        )}
 
         <button
           type="button"
